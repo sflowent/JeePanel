@@ -1,0 +1,7 @@
+<widget-box [background]="settings().background" [center]="false">
+  <text-font [text]="settings().label" [font]="settings().labelFont"></text-font>
+
+  <div #chart class="chart">
+    <jee-generic-chart [settings]="settings().chartSettings"></jee-generic-chart>
+  </div>
+</widget-box>

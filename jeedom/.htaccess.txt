@@ -1,0 +1,8 @@
+<IfModule mod_dir.c>
+DirectoryIndex index.html
+</IfModule>
+
+<FilesMatch ".*\.(css|map|js|jpeg|jpg|png|php|html|svg|woff|woff2|ttf|m3u8|ts|ico|gif|webp|mp3|aac|mp4|pdf|txt|json|webmanifest)$|(apple\-app\-site\-association)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

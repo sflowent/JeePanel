@@ -1,0 +1,49 @@
+jee-slider {
+  .mdc-slider__value-indicator {
+    transform: scale(1) !important;
+  }
+
+  .jee-slider-vertical {
+    transform: rotate(-90deg);
+
+    .mdc-slider__value-indicator-container {
+      transform:  translateX(-50%) rotate(-45deg);
+    }
+
+    .mdc-slider__value-indicator-text{
+      transform: rotate(135deg);
+    }
+
+    .jee-slider-step-label {
+      transform: rotate(90deg);
+    }
+  }
+
+  .jee-slider-steps-container {
+    position: absolute;
+    width: 100%;
+    top: -30px;
+
+    .jee-slider-step-container {
+      position: absolute;
+      text-align: center;
+    }
+
+    .jee-slider-step-thumb {
+      height: 20px;
+      width: 20px;
+      transform: scale(0.5);
+      border-radius: 50%;
+      margin: 2px auto;
+      background-color: var(--slider-tick-color);
+
+      &.selected {
+        background-color: var(--slider-track-fill);
+      }
+    }
+
+    .jee-slider-step-thumb {
+      margin: 3px auto;
+    }
+  }
+}

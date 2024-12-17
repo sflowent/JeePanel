@@ -1,0 +1,24 @@
+<div class="config-header">
+    <h2>Configuration : Local Storage</h2>
+    <div class="config-header-actions">
+        <button #btnSave mat-raised-button color="primary" (click)="save()">
+            <mat-icon>save</mat-icon>
+            {{btnSaveLabel}}</button>
+    </div>
+</div>
+<div class="config-select">
+    <mat-form-field>
+        <mat-label>Configuration</mat-label>
+        <mat-select [(ngModel)]="configType"  (selectionChange)="onConfigTypeChanged()">
+            <mat-option value="local-settings">Configuration locale</mat-option>
+            <mat-option value="settings">Configuration globale</mat-option>
+            <mat-option value="dashboards">Dashboards</mat-option>
+        </mat-select>
+      </mat-form-field>
+</div>
+<div class="config-container">
+    <jee-code-editor
+    [(ngModel)]="config"
+    ngDefaultControl
+  ></jee-code-editor>
+</div>

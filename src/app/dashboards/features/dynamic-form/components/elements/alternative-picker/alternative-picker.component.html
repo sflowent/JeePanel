@@ -1,0 +1,90 @@
+@if(!noDescription()){
+<div>
+  Cet écran permet de définir l'affichage du widget en fonction de la valeur.
+  <br />
+  Exemple de valeur possible :
+  <ul>
+    <li>&gt;90 : s'appliquera si la valeur est suprérieur à 90</li>
+    <li>10 &lt; %value% &lt; 90 : s'appliquera si la valeur est comprise en 10 et 90</li>
+    <li>14 : s'appliquera si la valeur est égale à 14</li>
+  </ul>
+</div>
+}
+
+<div [formGroup]="form()">
+  <ng-container formArrayName="alternatives" class="alternatives">
+    <mat-accordion>
+      @for (alternativeForm of formArrayAlternatives.controls; track $index) {
+      <div [formGroup]="alternativeForm" class="alternative-item">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Expression : {{ value.alternatives[$index].expression }}
+              @if(value.alternatives[$index].displayValue != null ){
+              <span>&nbsp;=> {{ value.alternatives[$index].displayValue }}</span>
+              }
+
+              <button mat-icon-button (click)="deleteAlternative($index)" color="primary">
+                <mat-icon class="delete-btn"> delete_forever</mat-icon>
+              </button>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row values">
+            <mat-form-field>
+              <mat-label>Expression</mat-label>
+              <input matInput type="text" formControlName="expression" />
+              <!-- <button matSuffix mat-icon-button aria-label="Clear" (click)="openCommandPicker()">
+              <mat-icon>menu</mat-icon>
+            </button> -->
+              @if (alternativeForm.hasError('expression')) {
+              <mat-error>Invalide</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Valeur remplacement</mat-label>
+              <input matInput type="text" formControlName="displayValue" />
+            </mat-form-field>
+          </div>
+          @if(!element().ui?.hideColors){
+          <div class="row alternative-item-color">
+            <div class="col-label">Couleur du titre</div>
+            <div class="col-value">
+              <jee-color-picker [form]="alternativeForm" formControlName="labelColor"></jee-color-picker>
+            </div>
+          </div>
+          <div class="row alternative-item-color">
+            <div class="col-label">Couleur de la valeur</div>
+            <div class="col-value">
+              <jee-color-picker [form]="alternativeForm" formControlName="valueColor"></jee-color-picker>
+            </div>
+          </div>
+          <div class="row alternative-item-color">
+            <div class="col-label">Couleur d'arrière plan</div>
+            <div class="col-value">
+              <jee-color-picker [form]="alternativeForm" formControlName="bgColor"></jee-color-picker>
+            </div>
+          </div>
+          } @if(!element().ui?.hideIcons){
+          <div class="row">
+            <widget-icon-picker label="Icône" formControlName="icon"></widget-icon-picker>
+          </div>
+          <div class="row">
+            <div class="col-label">Icône en surbrillance</div>
+            <div class="col-value">
+              <mat-checkbox formControlName="hightlightIcon"></mat-checkbox>
+            </div>
+          </div>
+          <div class="row">
+            <widget-icon-picker [element]="{ui: {hideSize: true, nullable: true}}"  label="Icône d'arrière plan" formControlName="bgIcon"></widget-icon-picker>
+          </div>
+          }
+        </mat-expansion-panel>
+      </div>
+      }
+    </mat-accordion>
+  </ng-container>
+</div>
+
+<button mat-button (click)="addAlternative()">Ajouter</button>

@@ -1,0 +1,36 @@
+:host{
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-selector {
+  background-color: var(--widget-bg);
+
+  cursor: pointer;
+  padding: 10px;
+  //background-color: var(--mdc-dialog-container-color);
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+  border-radius: 5px;
+
+  &:hover {
+    filter: brightness(120%);
+    -webkit-filter: brightness(120%);
+  }
+
+  &:active {
+    filter: brightness(130%);
+    -webkit-filter: brightness(130%);
+  }
+
+  .icon {
+    padding: 5px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100px;
+    min-width: 100px;
+    box-sizing: border-box;
+  }
+}

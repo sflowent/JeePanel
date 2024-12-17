@@ -1,0 +1,14 @@
+@use '@assets/styles/media-sizes.scss' as *;
+
+gridster{
+  &.editing{
+    @media #{$mat-lt-md} {
+      margin-right: 25px;
+    }
+  }
+}
+
+.widget {
+  height: 100%;
+  background-color: var(--widget-bg);
+}

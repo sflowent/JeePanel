@@ -1,0 +1,17 @@
+text-font {
+  margin-bottom: 15px;
+}
+
+.image{
+  position: relative;
+  overflow: hidden;    
+  display: flex;
+  place-content: center;
+  flex: 1;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}

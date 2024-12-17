@@ -1,0 +1,22 @@
+<widget-box [background]="settings().background" [ngClass]="{ 'big-slider': settings().bigSlider }">
+  <div class="slider-widget">
+    @if (!settings().hideLabel) {
+      <div class="label">
+        <text-font [text]="settings().label" [font]="settings().labelFont"></text-font>
+      </div>
+    }
+
+    <jee-slider
+      [ngClass]="{ vertical: settings().vertical }"
+      [min]="settings().min"
+      [max]="settings().max"
+      [vertical]="settings().vertical"
+      [bigSlider]="settings().bigSlider"
+      [value]="value"
+      [step]="settings().step"
+      [showTicks]="settings().showTicks"
+      [showTicksLabel]="settings().showTicksLabel"
+      (valueChange)="onValueChange($event)">
+    </jee-slider>
+  </div>
+</widget-box>

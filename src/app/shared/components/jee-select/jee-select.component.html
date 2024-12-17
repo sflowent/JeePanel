@@ -1,0 +1,33 @@
+<button
+  mat-stroked-button
+  (click)="isOpen = !isOpen"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (backdropClick)="isOpen = !isOpen"
+>
+  @if (selectedTemplate() && selectedItem()) {
+    <ng-container [ngTemplateOutlet]="selectedTemplate()" [ngTemplateOutletContext]="{ item: selectedItem(), index: i }"> </ng-container>
+  }
+</button>
+
+<!-- This template displays the overlay content and is connected to the button -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayDisableClose]="false"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayBackdropClass]="'jee-select-backdrop'"
+  (overlayOutsideClick)="close()"
+>
+<div class="jee-select-overlay-content">
+  @for (item of items(); track item; let i = $index) {
+    <button mat-button class="jee-select-item" (click)="onItemSelected(item)">
+      <ng-container
+        [ngTemplateOutlet]="itemTemplate()"
+        [ngTemplateOutletContext]="{ item: item, index: i, selected: item === selectedItem() }">
+      </ng-container>
+    </button>
+  }
+  </div>
+</ng-template>

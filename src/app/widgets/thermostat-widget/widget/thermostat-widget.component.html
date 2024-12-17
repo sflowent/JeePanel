@@ -1,0 +1,58 @@
+<widget-box [background]="background">
+  <div>
+    <label-icon-value [label]="settings().label" [labelFont]="settings().labelFont"></label-icon-value>
+  </div>
+
+  <div class="current-temperature">
+    <div class="temp-title">Température actuelle</div>
+    <div class="temp-value"><jee-value-unit [value]="currentTemperature" [unit]="'°C'"></jee-value-unit></div>
+  </div>
+  <div class="setpoint-temperature">
+    <jee-knob
+      [(value)]="setpointTemperatureValue"
+      (valueChange)="onSetPointChange()"
+      label="Cible"
+      [valMin]="valMin"
+      [valMax]="valMax"
+      unit="°C"
+    ></jee-knob>
+  </div>
+  <div class="footer">
+    <div class="current-status">
+      <mat-icon [class.fill]="heating">local_fire_department</mat-icon>
+      <div class="current-status-content">
+        <div class="current-status-label">Etat</div>
+        <div class="current-status-value">{{ status }}</div>
+      </div>
+    </div>
+    <div class="modes">
+      <jee-select [(selectedItem)]="selectedMode" (selectedItemChange)="onSelectedItemChange()" [items]="modes">
+        <ng-template #selectedTemplate let-item="item">
+          <div class="mode">
+            <div class="mode-icon">
+              @if (item.icon) {
+                <widget-icon color="white" [settings]="item.icon"></widget-icon>
+              } @else {
+                <mat-icon [inline]="true">heat_pump_balance</mat-icon>
+              }
+            </div>
+            <div class="mode-value">{{ item.value }}</div>
+          </div>
+        </ng-template>
+
+        <ng-template #itemTemplate let-item="item">
+          <div class="mode">
+            <div class="mode-icon">
+              @if (item.icon) {
+                <widget-icon color="white" [settings]="item.icon"></widget-icon>
+              } @else {
+                <mat-icon [inline]="true">heat_pump_balance</mat-icon>
+              }
+            </div>
+            <div class="mode-value">{{ item.value }}</div>
+          </div>
+        </ng-template>
+      </jee-select>
+    </div>
+  </div>
+</widget-box>

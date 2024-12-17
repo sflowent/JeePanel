@@ -1,0 +1,18 @@
+@if (element().label) {
+  <div class="col-label">
+    <label>{{ element().label }}</label>
+  </div>
+}
+<div class="col-value">
+  @if(element()?.ui?.nullable){
+    <mat-checkbox [(ngModel)]="noValue" (click)="onNoValueSelected()">Valeur par défaut</mat-checkbox>
+    } @if(!noValue){
+    <form [formGroup]="form">
+      <icon-picker formControlName="icon"></icon-picker>
+
+      @if (!element().ui?.hideSize) {
+        <jee-slider-number [form]="form" [min]="element().ui?.min" [max]="element().ui?.max" formControlName="iconSize" label="Taille"></jee-slider-number>
+      }
+    </form>
+  }
+</div>

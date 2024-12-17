@@ -1,0 +1,43 @@
+<div [formGroup]="form()" class="wrapper">
+  @if (element().category) {
+    <div class="row">
+      <h4>{{ element().category }}</h4>
+    </div>
+    } @if (isLiteralValue) {
+      <literal-type-picker [form]="form()"  [formControlName]="element().name" [element]="element()" [control]="control"></literal-type-picker>
+  }
+  <!-- FONT -->
+  @if (element().type === 'font') {
+    <text-font-picker [formControlName]="element().name" [element]="element()"></text-font-picker>
+  }
+
+  <!-- ICON -->
+  @if (element().type === 'icon') {
+    <widget-icon-picker [element]="element()" [formControlName]="element().name"></widget-icon-picker>
+  }
+
+  <!-- COMMAND -->
+  @if (element().type === 'command') {
+    <jee-command-picker [element]="element()" [formControlName]="element().name"></jee-command-picker>
+  }
+
+  <!-- COMMAND-LIST -->
+  @if (element().type === 'commandList') {
+    <jee-command-list-picker [form]="form()" [element]="element()" [formControlName]="element().name"></jee-command-list-picker>
+  }
+
+  <!-- ALTERNATIVE -->
+  @if (element().type === 'alternative') {
+    <jee-alternative-picker [form]="form()" [element]="element()" [formControlName]="element().name"></jee-alternative-picker>
+  }
+
+  <!-- Chart -->
+  @if (element().type === 'chart') {
+    <jee-chart-picker [form]="form()" [element]="element()" [formControlName]="element().name"></jee-chart-picker>
+  }
+
+  <!-- COMMAND LIST CHART -->
+  @if (element().type === 'commandListChart') {
+    <jee-command-list-chart-picker [form]="form()" [element]="element()" [formControlName]="element().name"></jee-command-list-chart-picker>
+  }
+</div>

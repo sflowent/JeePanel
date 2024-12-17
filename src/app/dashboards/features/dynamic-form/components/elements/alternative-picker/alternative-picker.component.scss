@@ -1,0 +1,38 @@
+.alternatives {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+mat-expansion-panel {
+  width: 100%;
+}
+
+.values{
+  display: flex;
+  place-content: space-between;
+}
+
+
+.alternative-item {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  place-content: center space-evenly;
+  gap: 15px;
+
+  .alternative-item-color {
+    display: flex;
+    flex-direction: row;
+    align-self: baseline;
+    gap: 10px;
+
+    jee-color-picker {
+      margin-top: -10px;
+    }
+  }
+
+  .alternative-item-action {
+    align-self: center;
+  }
+}

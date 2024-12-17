@@ -1,0 +1,54 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre",
+        "category": "Titre"
+      },
+      {
+        "name": "labelFont",
+        "type": "font",
+        "ui": { "hideFormat": true }
+      },
+      {
+        "name": "chartSettings",
+        "type": "chart",
+        "category": "Graphique"
+      }
+    ]
+  },
+  {
+    "label": "Affichage",
+    "rows": [
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Icones",
+    "rows": [
+      {
+        "name": "background.backdropIcon",
+        "type": "icon",
+        "ui": { "hideSize": true },
+        "label": "Icône arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Séries",
+    "rows": [
+      {
+        "name": "chartSettings.series",
+        "type": "commandListChart"
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+<div class="header">
+  <h2 mat-dialog-title>Historique - {{ settings.title }}</h2>
+  <div class="actions">
+    <button mat-icon-button tabindex="-1" (click)="showChartSettings()">
+      <mat-icon >settings</mat-icon>
+    </button>
+  </div>
+</div>
+<mat-dialog-content>
+  <jee-generic-chart [settings]="settings"></jee-generic-chart>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]>Ok</button>
+</mat-dialog-actions>

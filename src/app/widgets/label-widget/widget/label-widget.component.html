@@ -1,0 +1,27 @@
+<widget-box [background]="background" [ngClass]="{ action: isHistorized }" (click)="showHistory()">
+  @if(!settings().marquee){
+  <label-icon-value
+    [alignHorizontal]="settings().alignHorizontal"
+    [label]="settings().label"
+    [labelFont]="labelFont"
+    [value]="displayValue"
+    [valueFont]="valueFont"
+    [icon]="icon"
+    [highlightIcon]="highlightIcon"
+    [iconLeft]="settings().iconLeft"
+    [hideValue]="hideValue"></label-icon-value>
+  }
+  @else{
+    <jee-marquee>
+      <ng-template #marqueeTemplate>
+        <label-icon-value
+        [alignHorizontal]="true"
+        [label]="settings().label"
+        [labelFont]="labelFont"
+        [value]="displayValue"
+        [valueFont]="valueFont"
+        [hideValue]="hideValue"></label-icon-value>
+      </ng-template>
+    </jee-marquee>
+  }
+</widget-box>

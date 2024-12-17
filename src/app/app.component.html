@@ -1,0 +1,27 @@
+<div class="jee-body">
+  <mat-toolbar class="jee-toolbar">
+    <button mat-icon-button aria-label="Menu" (click)="sidenav.toggle()">
+      <mat-icon fontSet="material-symbols-outlined">menu</mat-icon>
+    </button>
+    <h1>{{ pageTitleService.pageTitle$ | async }}</h1>
+    <div class="jee-toolbar-actions" (click)="sidenav.close()">
+      <toolbar-actions></toolbar-actions>
+      <div class="time-clock">
+        <span>
+          {{ now | date: 'HH:mm:ss' }}
+        </span>
+      </div>
+      <mat-icon fontSet="material-symbols-outlined" class="screen" *ngIf="!isFullScreen" (click)="openFullscreen()">fullscreen</mat-icon>
+      <mat-icon fontSet="material-symbols-outlined" class="screen" *ngIf="isFullScreen" (click)="closeFullscreen()">fullscreen_exit</mat-icon>
+    </div>
+  </mat-toolbar>
+
+  <mat-drawer-container #drawerContainer class="jee-drawer-container" [hasBackdrop]="sidenavService.hasBackdrop" [autosize] = "true">
+    <mat-drawer #sidenav mode="over" fixedInViewport="false" (click)="closeSidenav()" (closed)="sidenavClosed()" (opened)="sidenavOpened()">
+      <dashboard-sidenav></dashboard-sidenav>
+    </mat-drawer>
+    <mat-drawer-content>
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

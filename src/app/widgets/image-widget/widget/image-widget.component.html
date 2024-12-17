@@ -1,0 +1,8 @@
+<widget-box [background]="settings().background" [center]="false">
+  @if(!hideLabel){
+  <text-font [text]="settings().label" [font]="settings().labelFont"></text-font>
+  }
+  <div class="image">
+    <img [src]="url" />
+  </div>
+</widget-box>

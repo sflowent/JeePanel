@@ -1,0 +1,28 @@
+<div class="row" [formGroup]="form">
+  <div class="col-label">
+    <label [attr.for]="formNames['size']">Taille du texte</label>
+  </div>
+  <div class="col-value">
+    <jee-slider-number [form]="form" [formControlName]="formNames['size']" [id]="formNames['size']" min="12" max="128"> </jee-slider-number>
+  </div>
+</div>
+<div class="row" [formGroup]="form">
+  <div class="col-label">
+    <label [attr.for]="formNames['color']">Couleur du texte</label>
+  </div>
+  <div class="col-value">
+    <jee-color-picker [form]="form" [formControlName]="formNames['color']"></jee-color-picker>
+  </div>
+</div>
+@if (!element().ui?.hideFormat) {
+  <div class="row" [formGroup]="form">
+    <div class="col-label">
+      <label [attr.for]="formNames['unit']">Unité</label>
+    </div>
+    <div class="col-value">
+      <mat-form-field>
+        <input matInput type="text" [formControlName]="formNames['unit']" />
+      </mat-form-field>
+    </div>
+  </div>
+}

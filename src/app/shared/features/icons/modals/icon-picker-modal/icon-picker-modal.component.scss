@@ -1,0 +1,57 @@
+.icon-picker {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .icon-picker-filters {
+    display: flex;
+    flex: 0;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .icon-picker-list {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 112px);
+    width: 100%;
+    justify-content: space-between;
+    column-gap: 16px;
+    row-gap: 24px;
+
+    .icon-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 128px;
+      width: 112px;
+      place-content: center center;
+      align-items: center;
+      cursor: pointer;
+      background-color: var(--widget-bg);
+
+      &.selected,
+      &:hover {
+        span.icon-item-persistent {
+          opacity: 0.1;
+        }
+      }
+
+      span.icon-item-persistent {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        pointer-events: none;
+        border-radius: inherit;
+        background-color: white;
+        opacity: 0;
+      }
+
+      .icon-name {
+        text-align: center;
+      }
+    }
+  }
+}

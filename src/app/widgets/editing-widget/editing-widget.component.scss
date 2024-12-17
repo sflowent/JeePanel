@@ -1,0 +1,37 @@
+:host {
+  height: 100%;
+  cursor: move;
+}
+
+.editing-widget {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h3 {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  .content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex: 1;
+    place-content: center;
+    align-items: center;
+  }
+}

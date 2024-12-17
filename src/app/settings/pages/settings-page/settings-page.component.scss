@@ -1,0 +1,33 @@
+@use '@assets/styles/media-sizes.scss'as *;
+
+.settings-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 20px;
+
+  @media #{$mat-lt-md} {
+    flex-direction: column-reverse;
+  }
+
+  .left-container {
+    .storage-container {
+      ul {
+        li {
+          list-style: none;
+          margin-bottom: 25px;
+        }
+      }
+    }
+  }
+
+  .right-container {
+    display: flex;
+    flex-direction: column;
+    
+    @media #{$mat-gt-sm} {
+      min-width: 600px;
+    }
+
+  }
+}

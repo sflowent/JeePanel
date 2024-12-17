@@ -1,0 +1,16 @@
+gridster {
+    background: var(--body-bg) !important;
+}
+ 
+.gridster .gridster-item:hover .handle-se {
+    border-width: 0 0 3rem 3rem !important;
+    border-color: transparent transparent var(--widget-text-color, #def) !important;
+}
+
+gridster .gridster-preview{
+    background: var(--gridster-preview-bg);
+  }
+
+gridster-item{
+    background-color: transparent !important;
+}

@@ -1,0 +1,1 @@
+import{B as i,k as o,zb as r}from"./chunk-ERHOLQCC.js";import"./chunk-2WH2EVR6.js";var d=(()=>{class t{constructor(){}resolveWidgetComponent(e){return r[e]}static{this.\u0275fac=function(n){return new(n||t)}}static{this.\u0275mod=i({type:t})}static{this.\u0275inj=o({})}}return t})();export{d as WidgetsModule};

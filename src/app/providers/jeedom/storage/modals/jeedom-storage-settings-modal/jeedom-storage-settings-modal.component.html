@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Stockage dans Jeedom</h2>
+<mat-dialog-content>
+  <div class="select-provider">
+    <mat-form-field>
+      <mat-label>Jeedom</mat-label>
+      <mat-select [(ngModel)]="providerSelected" (selectionChange)="onProviderSelected()">
+        @for (provider of jeedomProviders; track provider.settings.code) {
+          <mat-option [value]="provider">{{ provider.settings.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+    <div class="select-command">
+      <mat-form-field>
+        <mat-label>Commande</mat-label>
+        <input matInput type="text" disabled [value]="commandLabel" />
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="openCommandPicker()" [disabled]="!providerSelected">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]>Annuler</button>
+  <button mat-button color="primary" (click)="save()" [disabled]="!command" cdkFocusInitial>Enregistrer</button>
+</mat-dialog-actions>

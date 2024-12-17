@@ -1,0 +1,8 @@
+<div class="icon-selector" (click)="openIconPickerModal()">
+  @if(value){
+  <div class="icon">
+    <widget-icon [settings]="previewIcon"></widget-icon>
+    <span class="icon-name">{{ value.icon }}</span>
+  </div>
+  }
+</div>

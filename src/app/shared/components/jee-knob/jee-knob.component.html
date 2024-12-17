@@ -1,0 +1,31 @@
+<div [hidden]="!showKnob" #divKnobContainer class="jee-knob-container">
+  <div #divActionsContainer class="jee-knob-actions-container">
+    <div #divActions class="jee-knob-actions">
+      <div #minBtn (click)="remove($event)" class="jee-knob-action">
+        <mat-icon>remove</mat-icon>
+      </div>
+      <div #addBtn (click)="add($event)" class="jee-knob-action">
+        <mat-icon>add</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showAddRemove) {
+  <div #divActions class="jee-knob-without-knob">
+    <div (click)="remove($event)" class="jee-knob-action">
+      <mat-icon>remove</mat-icon>
+    </div>
+    <div class="jee-knob-value">
+      @if (label()) {
+        <div class="label">{{ label() }}</div>
+      }
+      <div class="value">
+        <jee-value-unit [value]="value()" [unit]="unit()"></jee-value-unit>
+      </div>
+    </div>
+    <div (click)="add($event)" class="jee-knob-action">
+      <mat-icon>add</mat-icon>
+    </div>
+  </div>
+}

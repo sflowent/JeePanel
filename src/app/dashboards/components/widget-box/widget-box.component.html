@@ -1,0 +1,9 @@
+<div class="box-content" [ngStyle]="{ 'background-color': background()?.bgColor ?? 'var(--widget-bg)' }">
+  @if (background()?.backdropIcon) {
+    <widget-icon [settings]="background().backdropIcon" backdrop="true"> </widget-icon>
+  }
+
+  <div class="widget-content" [ngClass]="{ 'center-content': center() }">
+    <ng-content></ng-content>
+  </div>
+</div>

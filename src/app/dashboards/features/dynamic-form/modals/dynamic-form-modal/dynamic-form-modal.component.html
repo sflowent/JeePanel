@@ -1,0 +1,21 @@
+<form class="modal-content" [formGroup]="form" (ngSubmit)="formSubmitted($event)">
+
+<h2 mat-dialog-title>
+  {{ title }}
+</h2>
+  <div mat-dialog-content>
+    <mat-tab-group>
+      @for (dynamicForm of dynamicForms; track $index) {
+        @if (isVisible(dynamicForm)) {
+          <mat-tab [label]="dynamicForm.label">
+            <dynamic-form [dynamicForm]="dynamicForm" [form]="form" (valueChanges)="valueChanges($event)"></dynamic-form>
+          </mat-tab>
+        }
+      }
+    </mat-tab-group>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]>Annuler</button>
+    <button mat-button type="submit" cdkFocusInitial>Enregister</button>
+  </div>
+</form>

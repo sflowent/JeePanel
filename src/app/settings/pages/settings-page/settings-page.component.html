@@ -1,0 +1,46 @@
+<div class="settings-container">
+  <div class="left-container">
+    <div class="storage-container">
+      <h4>Stockage des dashboards</h4>
+      <ul>
+        @for (storage of availableStorages; track storage.storageType) {
+          <li>
+            <input type="radio" (click)="switchStorageTo(storage)" [checked]="storage.selected" />{{storage.storageName}}
+            <br />
+            {{storage.description}}
+            <br />
+            <button mat-button (click)="openStorageConfig(storage)">Modifier la configuration</button>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="right-container">
+    <div>
+      <div>
+        <h3>Fournisseurs de données disponibles</h3>
+        <div>
+          <ul>
+            @for (provider of availableProviders; track $index) {
+              <li>{{ provider.providerName }} <button mat-button (click)="addProvider(provider)">Ajouter</button></li>
+            }
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3>Fournisseurs de données configurés</h3>
+        <div>
+          <ul>
+            @for (provider of providersSettings; track $index) {
+              <li>
+                {{ provider.label }} ( {{provider.code}})
+                <button mat-button (click)="editProviderSettings(provider)">Configuration</button>
+                <button mat-button (click)="deleteProviderSettings(provider)">Supprimer</button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

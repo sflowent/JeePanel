@@ -1,0 +1,9 @@
+<div class="jee-marquee-container">
+  @for (index of iterations; track index) {
+    <div class="jee-marquee-content-wrapper">
+      @if (marqueeTemplate()) {
+        <ng-container [ngTemplateOutlet]="marqueeTemplate()" [ngTemplateOutletContext]="{}"> </ng-container>
+      }
+    </div>
+  }
+</div>

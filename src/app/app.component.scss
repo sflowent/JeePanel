@@ -1,0 +1,46 @@
+@use '@assets/styles/media-sizes.scss' as *;
+
+.jee-body {
+  display: flex;
+  height: 100%;
+  flex: 1;
+  flex-direction: column;
+}
+
+.jee-drawer-container {
+  flex: 1;
+
+  mat-drawer {
+    width: 300px;
+  }
+}
+
+.jee-toolbar {
+  // background-color: var(--toolbar-bg);
+  padding: 0 10px 0 0;
+  height: 57px;
+  display: flex;
+
+  h1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .jee-toolbar-actions {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+  .time-clock{
+    @media #{$mat-lt-md} {
+      display: none;
+    }
+  }
+
+  .screen{
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      }
+    ]
+  },
+  {
+    "label": "Affichage",
+    "rows": [
+      {
+        "name": "labelFont",
+        "type": "font",
+        "category": "Titre",
+        "ui": { "hideFormat": true }
+      },
+      {
+        "name": "clockFont",
+        "type": "font",
+        "category": "Heure",
+        "ui": { "hideFormat": true, "min": "12" }
+      },
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  }
+]

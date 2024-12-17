@@ -1,0 +1,42 @@
+<ng-container [formGroup]="form()">
+  <div class="commands" formArrayName="commandListChart">
+    <mat-accordion>
+      @for (commandForm of formArrayCommands.controls; track $index) {
+        <div [formGroup]="commandForm" class="row">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <button mat-icon-button (click)="deleteCommand($index)" color="primary">
+                  <mat-icon class="delete-btn"> delete_forever</mat-icon>
+                </button>
+                Nom : {{ series[$index].name }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <jee-command-picker [element]="element()" label="Commande" formControlName="command"></jee-command-picker>
+            <div class="row">
+              <div class="col-label">
+                <span>Nom</span>
+              </div>
+              <div class="col-value">
+                <mat-form-field>
+                  <input matInput type="text" formControlName="name" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-label">
+                <span>Couleur</span>
+              </div>
+              <div class="col-value">
+                <jee-color-picker [form]="commandForm" [nullable]="false" formControlName="color"></jee-color-picker>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      }
+    </mat-accordion>
+  </div>
+
+  <button mat-button (click)="addCommand()">Ajouter</button>
+</ng-container>

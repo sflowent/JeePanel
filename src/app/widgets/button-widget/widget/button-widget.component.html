@@ -1,0 +1,42 @@
+@if (!navigate) {
+  <ng-container *ngTemplateOutlet="boxcontent"></ng-container>
+}
+
+@if (navigate) {
+  <a [href]="settings().href" [routerLink]="routerLink" [target]="settings().newTab ? '_blank' : ''">
+    <ng-container *ngTemplateOutlet="boxcontent"></ng-container>
+  </a>
+}
+
+<ng-template #boxcontent>
+  <widget-box [background]="background" class="action" (click)="actionClick()">
+    <div class="button-widget">
+      <label-icon-value
+        [alignHorizontal]="settings().alignHorizontal"
+        [label]="label"
+        [labelFont]="labelFont"
+        [value]="value"
+        [valueFont]="valueFont"
+        [icon]="icon"
+        [iconLeft]="settings().iconLeft"
+        [highlightIcon]="highlightIcon"
+        [hideValue]="navigate || hideValue"
+      ></label-icon-value>
+      @if (showButtons) {
+        <div class="buttons">
+          <div>
+            @if (settings().action.buttonLabel) {
+              <button mat-stroked-button (click)="buttonActionClick($event)">{{ settings().action.buttonLabel }}</button>
+            }
+          </div>
+
+          <div>
+            @if (settings().actionAlt.buttonLabel) {
+              <button mat-stroked-button (click)="buttonActionAltClick($event)">{{ settings().actionAlt.buttonLabel }}</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </widget-box>
+</ng-template>

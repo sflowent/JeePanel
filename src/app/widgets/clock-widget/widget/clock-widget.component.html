@@ -1,0 +1,5 @@
+<widget-box [background]="settings().background" [center]="true">
+  <div class="clock-widget">
+    <text-font [text]="now | date : 'HH:mm:ss'" [font]="settings().clockFont"></text-font>
+  </div>
+</widget-box>

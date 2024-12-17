@@ -1,0 +1,16 @@
+<form class="row" [formGroup]="form">
+  <div class="col-label">
+    <label [attr.for]="element().name + '-command'">{{ element().label }}</label>
+  </div>
+  <div class="col-value">
+    <mat-form-field class="full-width-field">
+      <input matInput [id]="element().name + '-command'" type="text" formControlName="commandLabel" />
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="openCommandPicker()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      @if (controlCommandLabel.hasError('commandLabel')) {
+        <mat-error>Invalide</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</form>

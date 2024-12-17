@@ -1,0 +1,15 @@
+@use '@assets/styles/media-sizes.scss' as *;
+
+.jeedom-command-picker {
+  display: flex;
+  gap: 15px;
+  margin: 10px;
+
+  @media #{$mat-lt-md} {
+    flex-direction: column;
+    mat-form-field{
+      width: 100%;
+    }
+  }
+  
+}

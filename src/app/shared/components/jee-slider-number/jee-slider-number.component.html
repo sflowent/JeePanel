@@ -1,0 +1,17 @@
+<div class="jee-slider-number" [formGroup]="form()">
+  <div>
+    <mat-form-field>
+      @if (label()) {
+        <mat-label>{{ label() }}</mat-label>
+      }
+      <input [value]="form().value[formControlName()]" [formControlName]="formControlName()" [id]="formControlName()" matInput type="number" />
+    </mat-form-field>
+  </div>
+  @if(max() != null || max() != undefined){
+    <div>
+      <mat-slider [max]="max()" [min]="min()" [step]="1" [discrete]="true" (change)="sliderChanged($event)">
+        <input matSliderThumb [formControlName]="formControlName()" [value]="form().value[formControlName()]" />
+      </mat-slider>
+    </div>
+  }
+</div>

@@ -1,0 +1,58 @@
+@use './media-sizes.scss' as *;
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+
+  @media #{$mat-lt-md} {
+    flex: 1;
+  }
+}
+
+.row {
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+  margin-bottom: 15px;
+
+  @media #{$mat-lt-md} {
+    flex-direction: column;
+  }
+
+}
+
+.form-element {
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+}
+
+.col-label {
+  display: flex;
+  align-self: center;
+  width: 30%;
+  place-content: center flex-end;
+  margin-right: 25px;
+
+  @media #{$mat-lt-md} {
+    margin-right: auto;
+    width: initial;
+  }
+}
+
+.col-value {
+  align-self: center;
+  flex: 1;
+  display: flex;
+
+  place-content: center start;
+  align-items: center;
+  @media #{$mat-lt-md} {
+    align-self:stretch;
+  }
+}
+
+.full-width-field{
+    width: 100%;
+}

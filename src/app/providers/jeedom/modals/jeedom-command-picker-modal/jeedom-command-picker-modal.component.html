@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Commande : {{formElement.label}}</h2>
+<mat-dialog-content>
+  <div class="jeedom-command-picker">
+    <div class="select-objects">
+      <mat-form-field>
+        <mat-label>Objet</mat-label>
+        <mat-select [(ngModel)]="objectSelected">
+          @for (object of objects; track object.id) {
+            <mat-option [value]="object">{{ object.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="select-equipments">
+      <mat-form-field>
+        <mat-label>Équipement</mat-label>
+        <mat-select [(ngModel)]="equipmentSelected" (selectionChange)="onEquipmentSelected()">
+          @for (equip of objectSelected?.eqLogics; track equip.id) {
+            <mat-option [value]="equip">{{ equip.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="select-commands">
+      <mat-form-field>
+        <mat-label>Commandes</mat-label>
+        <mat-select [(ngModel)]="commandSelected">
+          @for (cmd of commands; track cmd.id) {
+            <mat-option [value]="cmd">{{ cmd.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]>Annuler</button>
+  <button mat-button color="primary" (click)="onCommandSelected()" cdkFocusInitial>Enregistrer</button>
+</mat-dialog-actions>

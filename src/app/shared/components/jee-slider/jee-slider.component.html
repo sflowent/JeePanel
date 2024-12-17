@@ -1,0 +1,16 @@
+<div class="jee-slider-content">
+  <mat-slider
+    jeeTicksLabelSlider
+    [JeeBigSlider]="bigSlider()"
+    [disabled]="disabled()"
+    [max]="max()"
+    [min]="min()"
+    [step]="step()"
+    [discrete]="thumbLabel()"
+    [vertical]="vertical()"
+    [displayWith]="formatLabel"
+    [showTicks]="showTicks()"
+    [showTicksLabel]="showTicksLabel()">
+    <input matSliderThumb [(ngModel)]="value" />
+  </mat-slider>
+</div>

@@ -1,0 +1,92 @@
+@if (actions?.length === 1) {
+  @let action = actions[0];
+  <button mat-button (click)="action.action()">
+    @if (action.icon) {
+      <mat-icon>{{ action.icon }}</mat-icon>
+    }
+    {{ action.text }}
+  </button>
+} @else if (actions?.length > 1) {
+  <div class="toolbar-actions lists">
+    @for (action of actions; track action) {
+      <div>
+        @if (action.action) {
+          <button mat-button (click)="action.action()">
+            @if (action.icon) {
+              <mat-icon>{{ action.icon }}</mat-icon>
+            }
+            {{ action.text }}
+          </button>
+        }
+        @if (action.actions) {
+          <span>
+            <button mat-button [matMenuTriggerFor]="menu">
+              @if (action.icon) {
+                <mat-icon>{{ action.icon }}</mat-icon>
+              }
+              {{ action.text }}
+            </button>
+            <mat-menu #menu="matMenu">
+              @for (subaction of action.actions; track subaction) {
+                <button mat-menu-item (click)="subaction.action()">
+                  @if (subaction.icon) {
+                    <mat-icon>{{ subaction.icon }}</mat-icon>
+                  }
+                  {{ subaction.text }}
+                </button>
+              }
+            </mat-menu>
+          </span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="toolbar-actions menus">
+    @for (action of actionsPinned; track action) {
+      <button mat-icon-button (click)="action.action()">
+        @if (action.icon) {
+          <mat-icon>{{ action.icon }}</mat-icon>
+        }
+      </button>
+    }
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" fxLayout="column">
+      @for (action of actions; track action) {
+        <div>
+          @if (action.action) {
+            <button mat-menu-item (click)="action.action()">
+              @if (action.icon) {
+                <mat-icon>{{ action.icon }}</mat-icon>
+              }
+              {{ action.text }}
+            </button>
+          }
+          @if (action.actions) {
+            <span>
+              <button mat-menu-item [matMenuTriggerFor]="menu">
+                @if (action.icon) {
+                  <mat-icon>{{ action.icon }}</mat-icon>
+                }
+                {{ action.text }}
+              </button>
+              <mat-menu #menu="matMenu">
+                @for (subaction of action.actions; track subaction) {
+                  <button mat-menu-item (click)="subaction.action()">
+                    @if (subaction.icon) {
+                      <mat-icon>{{ subaction.icon }}</mat-icon>
+                    }
+                    {{ subaction.text }}
+                  </button>
+                }
+              </mat-menu>
+            </span>
+          }
+        </div>
+      }
+    </mat-menu>
+  </div>
+}

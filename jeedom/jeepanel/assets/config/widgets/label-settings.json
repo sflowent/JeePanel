@@ -1,0 +1,119 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      },
+      {
+        "name": "valueCommand",
+        "type": "command",
+        "label": "Valeur",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "marquee",
+        "type": "bool",
+        "label": "Faire défiler le texte"
+      }]
+  },
+  {
+    "label": "Affichage",
+    "hide": { "name": "marquee", "equals": [true] },
+    "rows": [
+      {
+        "name": "alignHorizontal",
+        "type": "bool",
+        "label": "Aligner horizontalement"
+      },
+      {
+        "name": "labelFont",
+        "type": "font",
+        "category": "Titre",
+        "ui": { "hideFormat": true }
+      },
+      {
+        "name": "hideValue",
+        "type": "bool",
+        "label": "Masquer la valeur",
+        "defaultValue": false,
+        "category": "Valeur"
+      },
+      {
+        "name": "valueFont",
+        "show": { "name": "hideValue", "equals": [false] },
+        "type": "font",
+        "ui": {}
+      },
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Icones",
+    "hide": { "name": "marquee", "equals": [true] },
+    "rows": [
+      {
+        "name": "icon",
+        "type": "icon",
+        "label": "Icône"
+      },
+      {
+        "name": "iconLeft",
+        "type": "bool",
+        "label": "Icone à gauche"
+      },
+      {
+        "name": "background.backdropIcon",
+        "type": "icon",
+        "ui": { "hideSize": true },
+        "label": "Icône arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Alternatives",
+    "hide": { "name": "marquee", "equals": [true] },
+    "rows": [
+      {
+        "name": "alternatives",
+        "type": "alternative",
+        "label": "Alternatives"
+      }
+    ]
+  },
+  {
+    "label": "Alternatives",
+    "show": { "name": "marquee", "equals": [true] },
+    "rows": [
+      {
+        "name": "alternativesMarquee",
+        "type": "alternative",
+        "label": "Alternatives",
+        "ui": { "hideColors": true, "hideIcons": true }
+      }
+    ]
+  },
+  {
+    "label": "Historique",
+    "rows": [
+      {
+        "name": "showHistory",
+        "type": "bool",
+        "label": "Afficher l'historique",
+        "ui": {}
+      },
+      {
+        "name": "history",
+        "show": { "name": "showHistory", "equals": [true] },
+        "type": "chart"
+      }
+    ]
+    }
+]

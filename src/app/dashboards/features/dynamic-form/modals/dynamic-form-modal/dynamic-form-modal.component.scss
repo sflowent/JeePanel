@@ -1,0 +1,9 @@
+@use '@assets/styles/media-sizes.scss' as *;
+
+.modal-content {
+  min-width: 600px;
+  margin: 0;
+  @media #{$mat-lt-md} {
+    min-width: initial;
+  }
+}

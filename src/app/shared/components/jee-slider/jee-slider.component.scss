@@ -1,0 +1,21 @@
+jee-slider{
+  container-type: size;
+  display: flex;
+      align-items: center;
+}
+
+.jee-slider-content {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  align-items: center;
+}
+
+mat-slider {
+  flex: 1;
+
+  &.jee-slider-vertical{
+
+  min-width: 85cqh  !important;
+  }
+}

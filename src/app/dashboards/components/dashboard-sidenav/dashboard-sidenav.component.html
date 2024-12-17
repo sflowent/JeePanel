@@ -1,0 +1,45 @@
+<div class="menu">
+  <a routerLink="/dashboards" class="sidenav-header"> JeePanel </a>
+  <div class="sidenav-body">
+    <ul class="dashboards-container">
+      @for (dashboard of jeePanelSettings.dashboards; track $index) { @if(!dashboard.default){
+      <li class="dashboard-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
+        <a [routerLink]="['/dashboards/' + dashboard.settings.code]">
+          <div class="dashboard-item-title">{{ dashboard.settings.title }}</div>
+        </a>
+        @if(editMode()){
+        <div class="dashboard-item-actions">
+          <mat-icon (click)="removeDashboard(dashboard, $event)">remove</mat-icon>
+        </div>
+        }
+      </li>
+      } }
+    </ul>
+  </div>
+  <div>
+    <div>
+      @if(editMode()){
+      <button mat-button (click)="addDashboard()">
+        <mat-icon>add</mat-icon>
+        dashboard
+      </button>
+      }
+    </div>
+  </div>
+  <div class="sidenav-footer">
+    <div class="date">{{ now | date : 'EEEE dd MMMM' }}</div>
+    <div class="footer-menu">
+      <div class="pin" (click)="togglePin($event)">
+        <mat-icon [inline]="true">push_pin</mat-icon>
+      </div>
+      <div class="hour">
+        {{ now | date : 'HH:mm:ss' }}
+      </div>
+      <div class="settings">
+        <a routerLink="settings">
+          <mat-icon [inline]="true">settings</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

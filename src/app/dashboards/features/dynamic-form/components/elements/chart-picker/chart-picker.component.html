@@ -1,0 +1,48 @@
+<div [formGroup]="form()">
+  <div class="row">
+    <div class="col-label">
+      <label>Graphique</label>
+    </div>
+    <div class="col-value">
+      <mat-form-field class="full-width-field">
+        <mat-select [formControlName]="formNames['type']">
+          @for (ctype of chartTypes; track ctype.type) {
+          <mat-option [value]="ctype.type">{{ ctype.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-label">
+      <label>Période</label>
+    </div>
+    <div class="col-value">
+      <mat-form-field class="full-width-field">
+        <mat-select [formControlName]="formNames['period']">
+          @for (period of chartPeriods; track period.code) {
+          <mat-option [value]="period.code">{{ period.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-label">
+      <label>Masquer les filtres</label>
+    </div>
+    <div class="col-value">
+      <mat-checkbox [formControlName]="formNames['hideFilters']"></mat-checkbox>
+    </div>
+  </div>
+  @if(!noAlternatives() && typeFromControl.value){
+  <div class="row">
+    <div class="col-label">
+      <label>Valeurs alternatives</label>
+    </div>
+    <div class="col-value">
+      <jee-alternative-picker [form]="form()" [formControlName]="formNames['alternatives']"></jee-alternative-picker>
+    </div>
+  </div>
+  }
+</div>

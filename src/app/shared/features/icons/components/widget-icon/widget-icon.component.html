@@ -1,0 +1,22 @@
+@if(settings()?.iconType === 'icon' ){
+  @if (url) {
+    <div #div class="icon" [ngClass]="{ 'backdrop-container': backdrop(), 'auto-height': !backdrop() && !settings().size, center: settings().center }">
+      @if(!hide){ 
+      <svg-icon
+        class="icon-tile"
+        [src]="url"
+        [svgStyle]="{ 'width': '100%', 'height': '100%', fill: svgColor }"
+        [ngClass]="{ on: !off() }">
+      </svg-icon>
+    }
+    </div>
+  }
+} @else if(settings()?.iconType === 'staticUrl' ){
+  @if (url) {
+    <div #div [ngClass]="{ 'auto-height': !backdrop() && !settings().size, backdrop: backdrop(), center: settings().center }">
+      @if(!hide){ 
+      <img [src]="url" [ngStyle]="{ height: settings().size ? auto : '100%' }" [height]="settings().size" />
+      }
+    </div>
+  }
+  } 

@@ -1,0 +1,18 @@
+@use '@assets/styles/media-sizes.scss' as *;
+
+.toolbar-actions {
+  flex-direction: row;
+    display: flex;
+
+  &.lists{
+    @media #{$mat-lt-md} {
+      display: none;
+    }
+  }
+
+  &.menus{
+    @media #{$mat-gt-sm} {
+      display: none;
+    }
+  }
+}

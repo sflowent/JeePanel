@@ -1,0 +1,12 @@
+text-font {
+  margin-bottom: 15px;
+}
+
+.chart {
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  jee-generic-chart {
+    flex: 1;
+  }
+}

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>
+  {{ title }}
+</h1>
+
+<div mat-dialog-content>
+  @if(message){
+  <p>{{ message }}</p>
+  }
+  <mat-form-field class="full-width-field">
+    <input matInput [(ngModel)]="value" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onDismiss()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Valider</button>
+</div>

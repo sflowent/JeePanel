@@ -1,0 +1,15 @@
+<div [ngClass]="{ round: round() }">
+  @if (form()) {
+    <input
+      matInput
+      [id]="formControlName()"
+      [(colorPicker)]="form().value[formControlName()]"
+      [style.background]="form().value[formControlName()]"
+      (colorPickerChange)="onColorChanged($event)"
+      />
+  }
+</div>
+
+@if(nullable()){
+  <mat-checkbox [(ngModel)]="noValue" (click)="onNoValueSelected()">Pas de valeur</mat-checkbox>
+}

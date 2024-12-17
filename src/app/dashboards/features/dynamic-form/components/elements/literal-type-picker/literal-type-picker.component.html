@@ -1,0 +1,46 @@
+<form class="row" [formGroup]="form()">
+  @if (element().label) {
+    <div class="col-label">
+      <label [attr.for]="element().name">{{ element().label }}</label>
+    </div>
+  }
+  <div class="col-value">
+    @if (element().type === 'text') {
+      <mat-form-field class="full-width-field">
+        <input matInput [formControlName]="element().name" [id]="element().name" type="text" />
+      </mat-form-field>
+    }
+
+    @if (element().type === 'number') {
+      <jee-slider-number
+        [form]="form()"
+        [formControlName]="element().name"
+        [min]="element()?.ui?.min"
+        [max]="element()?.ui?.max">
+      </jee-slider-number>
+    }
+
+    @if (element().type === 'bool') {
+      <mat-checkbox [formControlName]="element().name" [id]="element().name"> {{ element().ui?.text }}</mat-checkbox>
+    }
+
+    @if (element().type === 'color') {
+      <jee-color-picker
+        [form]="form()"
+        [formControlName]="element().name"
+      [nullable]="element().ui?.nullable || true"></jee-color-picker>
+    }
+
+    @if (element().type === 'select') {
+      <mat-form-field class="full-width-field">
+        <mat-select [formControl]="control()">
+          @for (choice of element().ui.options; track choice) {
+            <mat-option [value]="choice.value">
+              {{ choice.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </div>
+</form>

@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Icônes</h1>
+
+<div class="icon-picker" mat-dialog-content>
+  <div class="icon-picker-filters">
+    <mat-form-field>
+      <mat-label>Jeux d'icones</mat-label>
+      <mat-select [(ngModel)]="iconType" (selectionChange)="onIconTypeChange($event)">
+        <mat-option>Aucun</mat-option>
+        @for (iconSet of iconSets; track iconSet.id) {
+        <mat-option [value]="iconSet">{{ iconSet.name }}</mat-option>
+        }
+        <mat-divider></mat-divider>
+        <mat-option value="staticUrl">Depuis une Url</mat-option>
+      </mat-select>
+    </mat-form-field>
+    @if(value?.iconType === 'icon'){
+    <mat-form-field>
+      <mat-label>Rechercher</mat-label>
+      <input matInput [(ngModel)]="searchText" (ngModelChange)="onSearchIcon()" />
+    </mat-form-field>
+    }
+  </div>
+
+  @if(value?.iconType === 'icon'){
+  <div class="icon-picker-list">
+    @if(iconsLoading){
+    <div class="icon-loader">
+      <mat-icon>cached</mat-icon>
+    </div>
+    } @else{ @for (icon of icons; track icon) {
+    <div class="icon-item" [ngClass]="{selected: icon === value.icon}" (click)="onIconSelected(icon)">
+      <span class="icon-item-persistent"></span>
+      <svg-icon class="icon-tile" [src]="iconSet.info.basePath + icon + '.svg'" [svgStyle]="{ 'width.px': 48, 'height.px': 48 }"></svg-icon>
+      <div class="icon-name">{{ icon }}</div>
+    </div>
+    } }
+  </div>
+  }
+  @else if(value?.iconType === 'staticUrl'){
+  <div class="icon-picker-staticurl">
+    <mat-form-field class="full-width-field">
+      <mat-label>Url</mat-label>
+      <input matInput [(ngModel)]="value.staticUrl" />
+    </mat-form-field>
+    <mat-form-field class="full-width-field">
+      <mat-label>Fréquence de rafraihissement (en seconde)</mat-label>
+      <input matInput [(ngModel)]="value.refreshInterval" type="number" min="0" />
+    </mat-form-field>
+  </div>
+  }
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onDismiss()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Valider</button>
+</div>

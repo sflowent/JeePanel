@@ -1,0 +1,30 @@
+
+.jee-marquee-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  .jee-marquee-content-wrapper {
+    padding-inline: 8px;
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+    
+    white-space: nowrap;
+  }
+  
+  .jee-marquee-container:hover .jee-marquee-content-wrapper {
+    animation: scroll 10s linear infinite;
+  }
+  
+  
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }

@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>
+  Configuration Jeedom
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onConfirm()">
+    <mat-form-field>
+      <mat-label>Identifiant du fournisseur</mat-label>
+      <input matInput formControlName="providerCode" placeholder="Identifiant du fournisseur">
+      @if (form.get('providerCode')?.hasError('required')) {
+        <mat-error>L'identifiant est requise</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>URL</mat-label>
+      <input matInput formControlName="url" placeholder="https://example.com/api">
+      @if (form.get('url')?.hasError('required')) {
+        <mat-error>L'URL est requise</mat-error>
+      }
+      @if (form.get('url')?.hasError('pattern')) {
+        <mat-error>L'URL n'est pas valide</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>API Key</mat-label>
+      <input matInput formControlName="apiKey" placeholder="Votre clé API">
+      @if (form.get('apiKey')?.hasError('required')) {
+        <mat-error>La clé API est requise</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Temps d'attente entre 2 polling Jeedom (en ms)</mat-label>
+      <input matInput formControlName="waitTimeBetweenPolls" type="number" >
+      @if (form.get('waitTimeBetweenPolls ')?.hasError('required')) {
+        <mat-error>Le temps d'attente est obligatoire</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onDismiss()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Valider</button>
+</div>

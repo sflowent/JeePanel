@@ -1,0 +1,29 @@
+.slider-widget {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  padding: 0 15px;
+
+}
+
+jee-slider{
+  place-content: center;
+  flex: 1;
+  
+}
+
+.label {
+  margin: 5px 0;
+  text-align: center;
+  z-index: 9;
+}
+
+.vertical {
+  height: 100%;
+}
+
+.big-slider {
+  .label {
+    margin: 0;
+  }
+}

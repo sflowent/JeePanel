@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.col-label {
+  align-self: start;
+  margin-top: 25px;
+}
+
+.col-value{
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: start;
+
+  form{
+    display: contents;
+  }
+}

@@ -1,0 +1,14 @@
+<gridster [options]="options">
+  @if (isEditing) {
+    <div (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="hack-mobile-scrollbar"></div>
+  }
+  @for (widget of widgets; track $index) {
+    <gridster-item #gridsterItem [item]="widget">
+      <div class="widget">
+        <ng-container dynamic-widget [configuration]="widget" [isEditing]="isEditing" [gridsterItemComponent]="gridsterItem"></ng-container>
+      </div>
+    </gridster-item>
+  }
+</gridster>
+
+

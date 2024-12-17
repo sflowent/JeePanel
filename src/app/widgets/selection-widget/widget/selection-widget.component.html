@@ -1,0 +1,26 @@
+<widget-box [background]="background" (click)="openSelection()">
+  <label-icon-value
+    [alignHorizontal]="settings().alignHorizontal"
+    [label]="settings().label"
+    [labelFont]="labelFont"
+    [value]="value()"
+    [valueFont]="valueFont"
+    [icon]="icon"
+    [iconLeft]="settings().iconLeft"
+  [hideValue]="hideValue"></label-icon-value>
+</widget-box>
+
+<ng-template #selectionTemplateModal let-context>
+  <div class="selection">
+  <div [ngStyle]="{ 'grid-template-columns': 'repeat(' + context.columns + ', 1fr)' }">
+    @for (command of context.commands; track command) {
+      <div
+        class="selection-choice switch value"
+        (click)="context.select(command)"
+        [ngClass]="{ selected: command.selected, column: context.columns > 1, row: context.columns === 1 }">
+        <text-font [text]="command.value" [font]="command.valueFont || context.defaultFont"> </text-font>
+      </div>
+    }
+  </div>
+</div>
+</ng-template>

@@ -1,0 +1,56 @@
+:host {
+  cursor: pointer;
+
+  &:active {
+    filter: brightness(130%);
+    -webkit-filter: brightness(130%);
+  }
+}
+
+.widget-content {
+  z-index: 9;
+  display: flex;
+  place-content: center;
+  align-items: center;
+}
+
+widget-icon.icon {
+  display: block;
+  height: 100%;
+}
+
+.value {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.noLineBreak {
+  .value {
+    text-align: right;
+  }
+}
+
+
+.selection {
+  flex: 1;
+  background-color: var(--body-bg);
+  display: table;
+
+  & > div {
+    display: grid;
+    padding: 10px 20px;
+    .selection-choice {
+      margin: 15px 10px;
+      padding: 15px 10px;
+      background-color: var(--box-bg);
+      cursor: pointer;
+
+      &.column {
+        height: 75px;
+        display: flex;
+        place-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

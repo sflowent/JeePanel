@@ -1,0 +1,20 @@
+<widget-box [center]="false">
+  <div class="editing-widget">
+    <div class="toolbar">
+      <h3 [matTooltip]="settings().label">{{settings().label}}<br/>{{ widgetDeclaration.label }}</h3>
+      <div class="actions">
+        <button mat-icon-button [matMenuTriggerFor]="menu" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu >
+          <button mat-menu-item (click)="edit($event)" title="Editer"><mat-icon>edit</mat-icon>Editer</button>
+          <button mat-menu-item (click)="clone($event)" title="Cloner"><mat-icon>content_copy</mat-icon>Cloner</button>
+          <button mat-menu-item (click)="delete($event)" title="Supprimer"><mat-icon>close</mat-icon>Supprimer</button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="content">
+      <mat-icon>open_with</mat-icon>
+    </div>
+  </div>
+</widget-box>

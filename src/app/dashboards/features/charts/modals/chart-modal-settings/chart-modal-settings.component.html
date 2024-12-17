@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Paramétrage Historique</h2>
+<mat-dialog-content>
+  <div>
+    <div class="row">
+      <div class="col-label">
+        <label>Graphique</label>
+      </div>
+      <div class="col-value">
+        <mat-form-field class="full-width-field">
+          <mat-select [(ngModel)]="type">
+            @for (ctype of chartTypes; track ctype.type) {
+              <mat-option [value]="ctype.type">{{ ctype.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-label">
+        <label>Période</label>
+      </div>
+      <div class="col-value">
+        <mat-form-field class="full-width-field">
+          <mat-select [(ngModel)]="period">
+            @for (period of chartPeriods; track period.code) {
+              <mat-option [value]="period.code">{{ period.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]>Annuler</button>
+  <button mat-button (click)="save()">Enregistrer</button>
+</mat-dialog-actions>

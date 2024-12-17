@@ -1,0 +1,9 @@
+@if (dynamicForm()?.rows) {
+  <form [formGroup]="form()">
+    @for (elt of dynamicForm()?.rows; track $index) {
+      @if (isVisible(elt)) {
+        <form-element ngDefaultControl [element]="elt" [form]="form()" (valueCh)="_valueChanges($event)"></form-element>
+      }
+    }
+  </form>
+}

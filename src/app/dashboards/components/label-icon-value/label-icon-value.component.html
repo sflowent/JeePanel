@@ -1,0 +1,65 @@
+<div class="liv-container" [ngClass]="{ 'full-height': !icon()?.size }">
+  @if (alignHorizontal()) {
+    <div class="liv-content horizontal">
+      <div class="label-icon" [ngClass]="{ 'icon-left': iconLeft() }">
+        @if (showLabel) {
+          <div class="label">
+            <text-font [text]="label()" [font]="labelFont()"></text-font>
+          </div>
+        }
+        @if (iconShowed && !reloadIcon) {
+          <div class="icon" [ngClass]="{ 'auto-size': !iconShowed.size }" >
+            <widget-icon [settings]="iconShowed" [off]="!highlightIcon()"> </widget-icon>
+          </div>
+        }
+      </div>
+      @if (!hideValue() && value()) {
+        <div class="value">
+          <text-font [text]="value()" [font]="valueFont()"></text-font>
+        </div>
+      }
+    </div>
+  }
+
+  @if (!alignHorizontal() && iconLeft()) {
+    <div class="liv-content vertical-icon-left">
+      @if (iconShowed && !reloadIcon) {
+        <div class="icon" [ngClass]="{ 'auto-size': !iconShowed.size }" >
+          <widget-icon [settings]="iconShowed" [off]="!highlightIcon()"> </widget-icon>
+        </div>
+      }
+      <div class="label-value">
+        @if (showLabel) {
+          <div class="label">
+            <text-font [text]="label()" [font]="labelFont()"></text-font>
+          </div>
+        }
+        @if (!hideValue() && value()) {
+          <div class="value">
+            <text-font [text]="value()" [font]="valueFont()"></text-font>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (!alignHorizontal() && !iconLeft()) {
+    <div class="liv-content vertical-classic">
+      @if (showLabel) {
+        <div class="label">
+          <text-font [text]="label()" [font]="labelFont()"></text-font>
+        </div>
+      }
+      @if (iconShowed && !reloadIcon) {
+        <div class="icon" [ngClass]="{ 'auto-size': !iconShowed.size }" >
+          <widget-icon [settings]="iconShowed"[off]="!highlightIcon()"> </widget-icon>
+        </div>
+      }
+      @if (!hideValue()) {
+        <div class="value">
+          <text-font [text]="value()" [font]="valueFont()"></text-font>
+        </div>
+      }
+    </div>
+  }
+</div>

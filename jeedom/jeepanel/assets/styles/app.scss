@@ -1,0 +1,66 @@
+@use './media-sizes.scss' as *;
+@use './themes/jee-themes.scss';
+@use './gridster.scss';
+@use './forms.scss';
+@use 'material-symbols';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--body-bg);
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--widget-text-color, #def);
+}
+
+.wrapper {
+  display: contents;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-color-track);
+  border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color-thumb);
+  opacity: 0.5;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color-hover);
+}
+
+// Responsive Modal
+
+@media #{$mat-lt-md} {
+  .cdk-overlay-pane.mat-mdc-dialog-panel.modal-responsive {
+    width: 100% !important; /* Occupe toute la largeur de l'écran */
+    height: 100% !important; /* Occupe toute la hauteur de l'écran */
+    max-width: 100% !important; /* Empêche la restriction de largeur */
+    max-height: 100% !important; /* Empêche la restriction de hauteur */
+    margin: 0 !important; /* Supprime les marges */
+    padding: 0 !important; /* Supprime les paddings */
+    
+    .mat-mdc-dialog-content {
+      max-height: initial;
+    }
+  }
+}

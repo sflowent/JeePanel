@@ -1,0 +1,58 @@
+{
+  "configVersion": 1,
+  "timestamp": 1734443237456,
+  "index": "/jeepanel/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/jeepanel/chunk-2WH2EVR6.js",
+        "/jeepanel/chunk-7SHN5TTN.js",
+        "/jeepanel/chunk-ERHOLQCC.js",
+        "/jeepanel/chunk-KUYGWMAW.js",
+        "/jeepanel/favicon.ico",
+        "/jeepanel/index.html",
+        "/jeepanel/main-RSBXTH6T.js",
+        "/jeepanel/polyfills-FFHMD2TL.js",
+        "/jeepanel/styles-74SFMUT5.css"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/jeepanel/chunk-2WH2EVR6.js": "a8d5ceae94051e26ddc1f7a05ef9733be94e19f4",
+    "/jeepanel/chunk-7SHN5TTN.js": "e3039401ba67e488c93393d13aca2185e4ea4126",
+    "/jeepanel/chunk-ERHOLQCC.js": "06cf750a69ebf5fdd899d657e004f6d94ca2e638",
+    "/jeepanel/chunk-KUYGWMAW.js": "122967c76ef4e5ba04288a93fd53032c06c6a6c5",
+    "/jeepanel/favicon.ico": "28538f0171416d228400734d3de879aba3774fd0",
+    "/jeepanel/index.html": "4ca3da260fd22685e86e4fdb23150d75719f55ca",
+    "/jeepanel/main-RSBXTH6T.js": "aae86e6e704f6f3bd56dffcbfd46d342dc1eede8",
+    "/jeepanel/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
+    "/jeepanel/styles-74SFMUT5.css": "dd335562d806b3b75771faa8d36e5f79ad02e77c"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "valueCommand",
+        "type": "command",
+        "label": "Commande Valeur",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "actionCommand",
+        "type": "command",
+        "label": "Commande Action",
+        "ui": { "type": "action" }
+      },
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      }
+    ]
+  },
+  {
+    "label": "Affichage",
+    "rows": [
+      {
+        "name": "labelFont",
+        "type": "font",
+        "ui": { "hideFormat": true },
+        "category": "Formattage du titre"
+      },
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Slider",
+    "rows": [
+      {
+        "name": "min",
+        "type": "number",
+        "label": "Valeur minimale",
+        "defaultValue": 0
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "label": "Valeur maximale",
+        "defaultValue": 100
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "label": "Pas"
+      },
+      {
+        "name": "showTicks",
+        "type": "bool",
+        "label": "Afficher les pas"
+      },
+      {
+        "name": "showTicksLabel",
+        "type": "bool",
+        "label": "Afficher les labels des pas"
+      },
+      {
+        "name": "vertical",
+        "type": "bool",
+        "label": "Slider Vertical"
+      },
+      {
+        "name": "bigSlider",
+        "type": "bool",
+        "label": "Big Slider"
+      }
+    ]
+  },
+  {
+    "label": "Icones",
+    "rows": [
+      {
+        "name": "background.backdropIcon",
+        "type": "icon",
+        "ui": { "hideSize": true },
+        "label": "Icône arrière plan"
+      }
+    ]
+  }
+]

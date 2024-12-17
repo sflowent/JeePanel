@@ -1,0 +1,68 @@
+<ng-container [formGroup]="form()">
+  <div class="commands" formArrayName="commandList">
+    <mat-accordion>
+      @for (item of items; track item) {
+        <div [formGroup]="item.formGroup" class="row">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <button mat-icon-button (click)="deleteCommand($index, $event)" color="primary">
+                  <mat-icon class="delete-btn"> delete_forever</mat-icon>
+                </button>
+                Mode : {{ item.command.value }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <jee-command-picker label="Commande" [element]="item.commandElement" formControlName="command"></jee-command-picker>
+            <div class="row">
+              <div class="col-label">
+                <span>Valeur</span>
+              </div>
+              <div class="col-value">
+                <mat-form-field>
+                  <input matInput type="text" formControlName="value" />
+                </mat-form-field>
+              </div>
+            </div>
+            @if(!element().ui?.hideColors){
+            <div class="row">
+              <div class="col-label">
+                <span>Couleur du fond</span>
+              </div>
+              <div class="col-value">
+                <jee-color-picker [form]="commandForm" formControlName="bgColor" noValue="true"></jee-color-picker>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-label">
+                <span>Couleur du titre</span>
+              </div>
+              <div class="col-value">
+                <jee-color-picker [form]="commandForm" formControlName="labelColor" noValue="true"></jee-color-picker>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-label">
+                <span>Couleur de la valeur</span>
+              </div>
+              <div class="col-value">
+                <jee-color-picker [form]="commandForm" formControlName="valueColor" noValue="true"></jee-color-picker>
+              </div>
+            </div>
+          }
+          @if(!element().ui?.hideBackgroundIcon){
+
+          }
+          @if(!element().ui?.hideIcon){
+            <div class="row">
+              <widget-icon-picker [form]="commandForm" label="Icône" formControlName="icon"></widget-icon-picker>
+            </div>
+          }
+          </mat-expansion-panel>
+        </div>
+      }
+    </mat-accordion>
+  </div>
+
+  <button mat-button (click)="addCommand()">Ajouter</button>
+</ng-container>

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>
+  {{ title }}
+</h2>
+
+<div mat-dialog-content>
+  <p>{{ message }}</p>
+</div>
+
+<div mat-dialog-actions align="end">
+  @if(!actions?.length){
+  <button mat-button (click)="onDismiss()">Non</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Oui</button>
+  }
+  @else {
+    @for (action of actions; track $index) {
+      <button mat-button (click)="clickAction(action.value)">{{action.text}}</button>
+    }
+  }
+</div>

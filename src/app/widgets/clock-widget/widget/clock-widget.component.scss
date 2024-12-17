@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  place-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+widget-box {
+  flex: 1;
+  width: 100%;
+}
+
+.clock-widget {
+  align-self: center;
+}

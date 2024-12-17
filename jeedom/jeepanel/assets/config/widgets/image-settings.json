@@ -1,0 +1,61 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      },
+      {
+        "name": "source",
+        "type": "select",
+        "label": "Source",
+        "defaultValue": "static",
+        "ui": {
+          "options": [
+            { "value": "static", "label": "Url statique" },
+            { "value": "command", "label": "Url récupérée depuis une commande" }
+          ]
+        }
+      },
+      {
+        "name": "valueCommand",
+        "show": { "name": "source", "equals": ["command"] },
+        "type": "command",
+        "label": "Valeur",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "staticUrl",
+        "show": { "name": "source", "equals": ["static"] },
+        "type": "text",
+        "label": "Url"
+      },
+      {
+        "name": "refreshInterval",
+        "show": { "name": "source", "equals": ["static"] },
+        "type": "number",
+        "label": "Fréquence rafraichissement",
+        "ui": { "min": 500 }
+      }
+    ]
+  },
+  {
+    "label": "Affichage",
+    "rows": [
+      {
+        "name": "labelFont",
+        "type": "font",
+        "category": "Titre",
+        "ui": { "hideFormat": true }
+      },
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  }
+]

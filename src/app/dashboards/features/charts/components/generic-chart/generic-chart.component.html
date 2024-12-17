@@ -1,0 +1,17 @@
+@if (isList()) {
+  <jee-list-value-chart [settings]="settings()"></jee-list-value-chart>
+} @else  {
+    <apx-chart class="chart"
+      #chart
+      [autoUpdateSeries]="true"
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [grid]="chartOptions.grid"
+      [stroke]="chartOptions.stroke"
+      [plotOptions]="chartOptions.plotOptions"
+      [tooltip]="chartOptions.tooltip"
+      [theme]="chartOptions.theme"
+      [colors]="chartOptions.colors"></apx-chart>
+}

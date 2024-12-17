@@ -1,0 +1,76 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      },
+      {
+        "name": "temperatureValueCommand",
+        "type": "command",
+        "label": "Température actuelle",
+        "category": "Température",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "setPointTemperatureValueCommand",
+        "type": "command",
+        "label": "Température de consigne",
+        "category": "Température de consigne",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "setPointTemperatureCommand",
+        "type": "command",
+        "label": "Réglage de la température",
+        "ui": { "type": "action" }
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "label": "Température minimale",
+        "defaultValue": 10
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "label": "Température maximale",
+        "defaultValue": 35
+      }
+    ]
+  },
+  {
+    "label": "Chauffage",
+    "rows": [
+      {
+        "name": "stateValueCommand",
+        "type": "command",
+        "label": "État du chauffage",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "heatingValue",
+        "type": "text",
+        "label": "Valeur de chauffe"
+      }
+    ]
+  },
+  {
+    "label": "Modes",
+    "rows": [
+      {
+        "name": "modeValueCommand",
+        "type": "command",
+        "label": "Mode actuel",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "modeCommands",
+        "type": "commandList",
+        "ui": { "hideColors": true, "hideBackgroungIcon": true }
+      }
+    ]
+  }
+]

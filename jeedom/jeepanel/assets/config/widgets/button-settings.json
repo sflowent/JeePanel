@@ -1,0 +1,182 @@
+[
+  {
+    "label": "Dashboard",
+    "rows": [
+      {
+        "name": "label",
+        "type": "text",
+        "label": "Titre"
+      },
+      {
+        "name": "actionType",
+        "type": "select",
+        "label": "Action",
+        "defaultValue":"command",
+        "ui": {
+          "options": [
+            { "value": "command", "label": "Envoyer une commande" },
+            { "value": "toggle", "label": "Alterner entre 2 états" },
+            {
+              "value": "navigate",
+              "label": "Naviguer vers un autre tableau de bord"
+            }
+          ]
+        }
+      },
+      {
+        "name": "action.command",
+        "hide": { "name": "actionType", "equals": ["navigate"] },
+        "type": "command",
+        "label": "Commande action",
+        "ui": { "type": "action" }
+      },
+      {
+        "name": "actionAlt.command",
+        "show": { "name": "actionType", "equals": ["toggle"] },
+        "type": "command",
+        "label": "Commande action inactif",
+        "ui": { "type": "action" }
+      },
+      {
+        "name": "valueCommand",
+        "show": { "name": "actionType", "equals": ["toggle"] },
+        "type": "command",
+        "label": "Valeur",
+        "ui": { "type": "info" }
+      },
+      {
+        "name": "showButtons",
+        "show": { "name": "actionType", "equals": ["toggle"] },
+        "type": "bool",
+        "label": "Afficher les boutons commandes"
+      }
+    ]
+  },
+  {
+    "label": "Affichage",
+    "rows": [
+      {
+        "name": "alignHorizontal",
+        "type": "bool",
+        "label": "Aligner horizontalement"
+      },
+      {
+        "name": "labelFont",
+        "type": "font",
+        "category": "Titre",
+        "ui": { "hideFormat": true }
+      },
+      {
+        "name": "hideValue",
+        "type": "bool",
+        "label": "Masquer la valeur",
+        "defaultValue": false,
+        "category": "Valeur"
+      },
+      {
+        "name": "valueFont",
+        "show": { "name": "hideValue", "equals": [false] },
+        "type": "font",
+        "ui": {}
+      },
+      {
+        "name": "background.bgColor",
+        "type": "color",
+        "label": "Couleur",
+        "category": "Couleur d'arrière plan"
+      }
+    ]
+  },
+  {
+    "label": "Actif",
+    "show": { "name": "actionType", "equals": ["toggle"] },
+    "rows": [
+      {
+        "name": "activeValue",
+        "type": "text",
+        "label": "Valeur"
+      },
+      {
+        "name": "action.colorize",
+        "type": "bool",
+        "label": "Icône en surbrillance",
+        "default": "true"
+      },
+      {
+        "name": "action.bgColor",
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur du fond"
+      },
+      {
+        "name": "action.labelColor",
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur du titre"
+      },
+      {
+        "name": "action.valueColor",
+        "show": { "name": "hideValue", "equals": [false] },
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur de la valeur"
+      },   
+      {
+        "name": "action.buttonLabel",
+        "type": "text",
+        "label": "Texte du bouton"
+      }
+    ]
+  },
+  {
+    "label": "Inactif",
+    "show": { "name": "actionType", "equals": ["toggle"] },
+    "rows": [
+      {
+        "name": "actionAlt.bgColor",
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur du fond"
+      },
+      {
+        "name": "actionAlt.labelColor",
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur du titre"
+      },
+      {
+        "name": "actionAlt.valueColor",
+        "show": { "name": "hideValue", "equals": [false] },
+        "type": "color",
+        "ui": {"nullable": true},
+        "label": "Couleur de la valeur"
+      },
+      {
+        "name": "actionAlt.buttonLabel",
+        "type": "text",
+        "label": "Texte du bouton"
+      }
+    ]
+  },
+  {
+    "label": "Icones",
+    "rows": [
+      {
+        "name": "icon",
+        "type": "icon",
+        "label": "Icône"
+      },
+      {
+        "name": "iconLeft",
+        "type": "bool",
+        "label": "Icone à gauche"
+      },
+      {
+        "name": "background.backdropIcon",
+        "type": "icon",
+        "ui": { "hideSize": true },
+        "label": "Icône arrière plan"
+      }
+    ]
+  }
+]
