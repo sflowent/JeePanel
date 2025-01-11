@@ -12,12 +12,12 @@
     }
 
     @if (element().type === 'number') {
-      <jee-slider-number
-        [form]="form()"
-        [formControlName]="element().name"
-        [min]="element()?.ui?.min"
-        [max]="element()?.ui?.max">
+      <jee-slider-number [form]="form()" [formControlName]="element().name" [min]="element()?.ui?.min" [max]="element()?.ui?.max">
       </jee-slider-number>
+    }
+
+    @if (element().type === 'select-dashboard') {
+      <jee-select-dashboard [formControlName]="element().name"> </jee-select-dashboard>
     }
 
     @if (element().type === 'bool') {
@@ -25,10 +25,7 @@
     }
 
     @if (element().type === 'color') {
-      <jee-color-picker
-        [form]="form()"
-        [formControlName]="element().name"
-      [nullable]="element().ui?.nullable || true"></jee-color-picker>
+      <jee-color-picker [form]="form()" [formControlName]="element().name" [nullable]="element().ui?.nullable || true"></jee-color-picker>
     }
 
     @if (element().type === 'select') {

@@ -38,7 +38,13 @@ export class DashboardManagerService {
   }
 
   Close() {
-    this.providersService.broadcastDashboardsEvent(DashboardsEvent.Close);
+    this.broadcastDashboardsEvent(DashboardsEvent.Close);
+  }
+
+  broadcastDashboardsEvent(event: DashboardsEvent) {
+      this.providersService.providers.forEach((provider) => {
+        provider.onDashboardEvent(event);
+      });
   }
 
   getRootDashboard(): Observable<Dashboard> {
@@ -70,6 +76,12 @@ export class DashboardManagerService {
     //dashboard.widgets = this._dashboards1_ws;
 
     return of(dashboard);
+  }
+
+  getDashboards(): Observable<Dashboard[]> {
+    const dashboards = this._dashboards;
+
+    return of(dashboards);
   }
 
   saveDashboard(dashboard: Dashboard): Observable<Dashboard> {
@@ -131,8 +143,17 @@ export class DashboardManagerService {
     this.init();
   }
 
-  addWidget(widget: WidgetBaseSettings) {
-    this.dashboard.widgets?.push(widget);
+  addWidget(widget: WidgetBaseSettings, dashboardCode?: string) {
+
+    if (!dashboardCode){
+      this.dashboard.widgets?.push(widget);
+    }
+
+    const dashboard = this._dashboards.find(d => d.settings.code === dashboardCode);
+    if (dashboard){
+      dashboard.widgets?.push(widget);
+      this.saveDashboard(dashboard);
+    }
   }
 
   removeWidget(widget: WidgetBaseSettings) {

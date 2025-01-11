@@ -1,35 +1,38 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { CommandFormElementConfig } from '@app/core/providers/models/command-form-element';
+import { SelectCommandSettings } from '@app/core/components/select-command/select-command-settings.model';
 import { ProvidersService } from '@app/core/providers/services/providers.service';
-import { JeedomCmd_http } from '@app/providers/jeedom/models/http-command';
 import { JeedomProviderService } from '@app/providers/jeedom/services/jeedom-provider.service';
-import { FormElementConfig } from '@dashboards/features/dynamic-form/models/dynamic-form.model';
+import { JeedomDataLoadingStatus } from '@app/providers/jeedom/services/jeedom.service';
 import { Command } from '@dashboards/models/command.model';
+import { SelectCommandComponent } from '../../../../../core/components/select-command/select-command.component';
 import { JeedomStorageConfig } from '../../models/jeedom-storage-config';
-import { clone } from '@app/shared/functions/clone';
 
 @Component({
-    selector: 'jee-jeedom-command-picker-modal',
-    imports: [FormsModule, MatFormFieldModule, MatIconButton, MatInputModule, MatSelectModule, MatDialogModule, MatButton, MatIcon],
-    templateUrl: './jeedom-storage-settings-modal.component.html',
-    styleUrl: './jeedom-storage-settings-modal.component.scss'
+  selector: 'jee-jeedom-command-picker-modal',
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule, MatButton, SelectCommandComponent],
+  templateUrl: './jeedom-storage-settings-modal.component.html',
+  styleUrl: './jeedom-storage-settings-modal.component.scss',
 })
 export class JeedomStorageSettingsModalComponent implements OnInit {
   providersService = inject(ProvidersService);
 
   settings: JeedomStorageConfig;
   command: Command | undefined;
+  loading= true;
 
   jeedomProviders: JeedomProviderService[];
   providerSelected: JeedomProviderService | undefined;
-  commandLabel: string = '';
+  
+  selectCommandSettings:SelectCommandSettings = {
+    placeholder: "Commande"
+  }
 
   constructor(
     public dialogRef: MatDialogRef<JeedomStorageSettingsModalComponent, any>,
@@ -39,17 +42,21 @@ export class JeedomStorageSettingsModalComponent implements OnInit {
     this.jeedomProviders = this.providersService.providers.filter((p) => p.settings.type === 'jeedom') as JeedomProviderService[];
 
     this.settings = data.settings;
-    this.command = this.settings?.command;
+    
 
-    this.providerSelected = this.command?.providerCode ? this.jeedomProviders.find((p) => p.settings.code === this.command?.providerCode) : undefined;
+    this.providerSelected = this.command?.providerCode
+      ? this.jeedomProviders.find((p) => p.settings.code === this.command?.providerCode)
+      : undefined;
     if (!this.providerSelected && this.jeedomProviders.length > 0) {
       this.providerSelected = this.jeedomProviders[0];
     }
 
     if (this.providerSelected) {
-      this.providerSelected.jeedomService.loadJeedomData().subscribe((result) => {
-        if (this.command) {
-          this._updateCommandLabel();
+      this.loading = true;
+      this.providerSelected.jeedomService.loadJeedomData().pipe(takeUntilDestroyed()).subscribe((result) => {
+        if (result.status === JeedomDataLoadingStatus.loaded){
+          this.command = this.settings?.command;
+          this.loading = false;
         }
       });
     }
@@ -59,41 +66,23 @@ export class JeedomStorageSettingsModalComponent implements OnInit {
 
   onProviderSelected() {
     if (this.settings) {
+      this.loading = true;
       this.command = undefined;
-      this.providerSelected?.jeedomService.loadJeedomData();
+      this.providerSelected?.jeedomService.loadJeedomData().subscribe((result) => {
+       this.loading = false;
+      });
     }
   }
 
-  openCommandPicker() {
-    if (!this.providerSelected) {
-      return;
-    }
-
-    this.providerSelected
-      .openCommandPickerModal(CommandFormElementConfig.newDynamicForm(new FormElementConfig()), this.command)
-      .subscribe((cv: Command) => {
-        if (cv) {
-          this.command = cv;
-          this._updateCommandLabel();
-        }
-      });
+  onCommandChange() {
+    
   }
 
   save() {
     this.dialogRef.close(
       new JeedomStorageConfig({
-        command: this.command
+        command: this.command,
       }),
     );
-  }
-
-  private _updateCommandLabel(): void {
-    this.commandLabel = '';
-    if (this.providerSelected && this.command) {
-      const label = this.providerSelected.getCommandLabelId(this.command);
-      if (label) {
-        this.commandLabel = label;
-      }
-    }
   }
 }

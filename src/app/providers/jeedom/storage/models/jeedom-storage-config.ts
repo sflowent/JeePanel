@@ -1,5 +1,4 @@
 import { Command } from '@dashboards/models/command.model';
-import { JeedomProviderService } from '../../services/jeedom-provider.service';
 
 export class JeedomStorageConfig {
   command: Command | undefined;

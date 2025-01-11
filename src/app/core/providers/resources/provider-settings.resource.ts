@@ -55,7 +55,6 @@ export class ProviderSettingsResource {
 
   saveProviderSettings(settings: ProviderSettings): Observable<ProviderSettings> {
     const all = this._getProvidersSettings();
-debugger;
     if (settings.id) {
       const existingSettings = all.find((s) => s.id === settings.id);
       if (existingSettings) {

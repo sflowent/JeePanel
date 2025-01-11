@@ -10,7 +10,7 @@ import { HistoryValue } from '@dashboards/features/charts/models/history-value.m
 import { CommandValue } from '@dashboards/models/command-value.model';
 import { Command } from '@dashboards/models/command.model';
 import { DashboardsEvent } from '@dashboards/services/dashboard-manager.service';
-import { Observable, ReplaySubject, Subject, map, of } from 'rxjs';
+import { Observable, ReplaySubject, Subject, filter, first, map, of, takeUntil } from 'rxjs';
 import { JeedomCommandPickerModalComponent } from '../modals/jeedom-command-picker-modal/jeedom-command-picker-modal.component';
 import { JeedomConfigurationModalComponent } from '../modals/jeedom-configuration-modal/jeedom-configuration-modal.component';
 import { JeedomCmd_http } from '../models/http-command';
@@ -19,6 +19,8 @@ import { jeedomHistoryValue_rpc } from '../models/rpc-command';
 import { JeedomResource } from '../resources/jeedom.resource';
 import { JeedomPresetsService } from './jeedom-presets.service';
 import { JeedomDataLoadingStatus, JeedomService } from './jeedom.service';
+import { SelectCommandSettings } from '@app/core/components/select-command/select-command-settings.model';
+import { FormElementConfig } from '@dashboards/features/dynamic-form/models/dynamic-form.model';
 
 @Injectable()
 export class JeedomProviderService implements ProviderBaseService, OnDestroy {
@@ -48,12 +50,10 @@ export class JeedomProviderService implements ProviderBaseService, OnDestroy {
     this.OnDestroy();
   }
 
-
   /************************ */
-  
+
   OnDestroy(): void {
-    debugger;
-    this.jeedomService.stopLongPolling();  
+    this.jeedomService.stopLongPolling();
   }
 
   setSettings(providerSettings: ProviderSettings): ProviderSettings {
@@ -70,7 +70,6 @@ export class JeedomProviderService implements ProviderBaseService, OnDestroy {
   }
 
   onDashboardEvent(event: DashboardsEvent): void {
-
     if (event === DashboardsEvent.Close) {
       this.jeedomService.stopLongPolling();
       return;
@@ -85,7 +84,7 @@ export class JeedomProviderService implements ProviderBaseService, OnDestroy {
       return;
     }
 
-    this.jeedomService.loadJeedomData().subscribe((result) => {
+    this.jeedomService.loadJeedomData(true).subscribe((result) => {
       if (result.status === JeedomDataLoadingStatus.loaded) {
         if (event === DashboardsEvent.View) {
           this.jeedomService.registerLongPolling();
@@ -107,19 +106,30 @@ export class JeedomProviderService implements ProviderBaseService, OnDestroy {
     return null;
   }
 
-  getCommandLabelId(value: Command): string | null {
-    if (value?.commandRef) {
-      return this.jeedomService.getJeedomCommand(value.commandRef)?.labelId || null;
+  getCommandLabelId(value: Command): Observable<string | null> {
+    const subject = new ReplaySubject<string | null>(1);
+    if (!value?.commandRef) {
+      subject.next(null);
     }
 
-    return null;
+    this.jeedomService
+      .loadJeedomData()
+      .pipe(
+        filter((result) => result.status === JeedomDataLoadingStatus.loaded),
+        first())
+      .subscribe((result) => {
+          const labelId = this.jeedomService.getJeedomCommand(value.commandRef)?.labelId || null;
+          subject.next(labelId);
+      });
+
+    return subject.asObservable();
   }
 
-  openCommandPickerModal(element: CommandFormElementConfig, command: Command | undefined): Observable<Command> {
+  openCommandPickerModal(settings: SelectCommandSettings, command: Command | undefined): Observable<Command> {
     const cvSubject = new Subject<Command>();
     const dialogRef = this.modalService.open(JeedomCommandPickerModalComponent, {
       jeedomService: this.jeedomService,
-      element: element,
+      settings: settings,
       commandId: command?.commandRef || this.lastCommandSelected?.id,
     });
 
@@ -128,11 +138,20 @@ export class JeedomProviderService implements ProviderBaseService, OnDestroy {
         this.lastCommandSelected = newCommand;
         const result = newCommand.toCommand(this.settings.code);
         cvSubject.next(result);
-        this.jeedomPresets.presetForm(this.jeedomService, element, newCommand);
+        //this.jeedomPresets.presetForm(this.jeedomService, settings, newCommand);
       }
     });
 
     return cvSubject.asObservable();
+  }
+
+  presetsWidgetCommands(element: FormElementConfig, command: Command): void {
+    const jeedomCommand = this.jeedomService.getJeedomCommand(command.commandRef);
+    if (!jeedomCommand) {
+      return;
+    }
+
+    this.jeedomPresets.presetForm(this.jeedomService, element, jeedomCommand);
   }
 
   openConfigurationModal(): Observable<JeedomConfig> {

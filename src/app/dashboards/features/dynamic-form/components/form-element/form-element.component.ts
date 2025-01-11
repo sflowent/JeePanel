@@ -43,7 +43,7 @@ export class FormElementComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.isLiteralValue = ['color', 'text', 'number', 'bool', 'select'].indexOf(this.element().type?.toLowerCase()) >= 0;
+    this.isLiteralValue = ['color', 'text', 'number', 'bool', 'select', 'select-dashboard'].indexOf(this.element().type?.toLowerCase()) >= 0;
 
     const element = this.element();
     if (this.isLiteralValue) {

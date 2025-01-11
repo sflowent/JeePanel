@@ -10,6 +10,8 @@ export class JeedomObject_http {
   image: any[];
   img: string;
   eqLogics: JeedomEquipement_http[] = [];
+  
+  children: JeedomObject_http[];
 
   constructor(init?: Partial<JeedomObject_http>) {
     Object.assign(this, init);

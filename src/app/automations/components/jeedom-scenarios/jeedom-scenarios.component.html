@@ -1,0 +1,56 @@
+<button mat-button (click)="addScenario()">
+  <mat-icon>add</mat-icon>
+  Ajouter
+</button>
+
+<mat-accordion>
+  @for (scenarioForm of scenariosForms; track scenarioForm.scenario.id) {
+    @let scenario = scenarioForm.scenario;
+    <mat-expansion-panel (click)="openScenario(scenarioForm)">
+      <mat-expansion-panel-header>
+        <mat-panel-title> {{ scenario.name }} </mat-panel-title>
+        <mat-panel-description> {{ scenario.nextRun | date: 'dd.MM.YYYY HH:mm' }} </mat-panel-description>
+      </mat-expansion-panel-header>
+      @if (scenarioForm.form) {
+        <form [formGroup]="scenarioForm.form">
+          <div class="row">
+            <div class="col-label">Date de lancement</div>
+            <div class="col-value">
+              <mat-form-field class="full-width-field">
+                <input matInput formControlName="schedule" type="text" />
+              </mat-form-field>
+            </div>
+          </div>
+          @let expressionsForm = scenarioForm.form.controls['expressions'];
+          @for (expressionControl of expressionsForm.controls; track $index; let idx = $index) {
+            <div [formGroup]="expressionControl">
+              <div class="row">
+                <div class="col-label">Commande</div>
+                <div class="col-value">
+                  <mat-form-field appearance="fill">
+                    <input matInput formControlName="command" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <mat-icon class="delete-btn" (click)="deleteCommand(expressionsForm, idx)"> delete_forever</mat-icon>
+                </div>
+                <div>
+                  <button mat-button (click)="saveScenario()">
+                    <mat-icon>add</mat-icon>
+                    Annuler
+                  </button>
+                  <button mat-button (click)="cancelScenario()">
+                    <mat-icon>add</mat-icon>
+                    Enregistrer
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </form>
+      }
+    </mat-expansion-panel>
+  }
+</mat-accordion>

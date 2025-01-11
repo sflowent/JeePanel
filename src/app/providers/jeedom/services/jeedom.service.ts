@@ -3,16 +3,17 @@ import { Observable, ReplaySubject, Subject, finalize, of } from 'rxjs';
 import { JeedomCmd_http, JeedomEquipement_http, JeedomObject_http } from '../models/http-command';
 import { JeedomConfig } from '../models/jeedom-config';
 import { JeedomResource } from '../resources/jeedom.resource';
+import { signal } from '@angular/core';
 
-export class JeedomDataLoadingResult{
+export class JeedomDataLoadingResult {
   status: JeedomDataLoadingStatus;
-  error: any
+  error: any;
 }
 
-export enum JeedomDataLoadingStatus{
-loading,
-loaded,
-error
+export enum JeedomDataLoadingStatus {
+  loading,
+  loaded,
+  error,
 }
 
 export class JeedomService {
@@ -25,7 +26,7 @@ export class JeedomService {
   loadingItems: any;
 
   equipments: JeedomEquipement_http[] = [];
-  objects: JeedomObject_http[] = [];
+  objects = signal<JeedomObject_http[]>([]);
   commands: JeedomCmd_http[] = [];
 
   pollingUpdateRunning: any;
@@ -34,21 +35,24 @@ export class JeedomService {
 
   private _longPollingNodeJSTimeout: NodeJS.Timeout | null = null;
   private _stopLongPolling: boolean = false;
+  resultSubject: ReplaySubject<JeedomDataLoadingResult> =new ReplaySubject(1) ;
 
   constructor(jeedomResource: JeedomResource) {
     this.jeedomResource = jeedomResource;
   }
 
-  loadJeedomData(): Observable<JeedomDataLoadingResult> {
-
-    const result = new JeedomDataLoadingResult()
+  loadJeedomData(force = false): Observable<JeedomDataLoadingResult> {
+    const result = new JeedomDataLoadingResult();
 
     if (this.loadingItems) {
       result.status = JeedomDataLoadingStatus.loading;
-      return of(result);
+      this.resultSubject.next(result);
+      return this.resultSubject;
     }
 
-    const resultSubject = new Subject<JeedomDataLoadingResult>();
+    if (!force) {
+      return this.resultSubject;
+    }
 
     this.loadingItems = true;
     this.jeedomResource.loadItems().subscribe({
@@ -58,11 +62,11 @@ export class JeedomService {
           console.log('Loaded ' + objects.length + ' jeedom Objects');
           this.reconnecting = false;
 
-          this.objects = objects;
-          this.equipments = objects.flatMap(o => o.eqLogics);
-          this.commands = this.equipments.flatMap(e => e.cmds);
+          this.objects.set(objects);
+          this.equipments = objects.flatMap((o) => o.eqLogics);
+          this.commands = this.equipments.flatMap((e) => e.cmds);
 
-          this.commands.forEach(cmd => {
+          this.commands.forEach((cmd) => {
             cmd.labelId = '#[' + cmd.equipment.object.name + '][' + cmd.equipment.name + '][' + cmd.name + ']#';
             if (cmd.type === 'info') {
               this._updateCommandValue(cmd.toCommandValue());
@@ -71,31 +75,29 @@ export class JeedomService {
 
           console.log('Loaded ' + Object.keys(this.equipments).length + ' jeedom Equipments');
           console.log('Loaded ' + this.commands.length + ' jeedom Commands');
-          //this.registerLongPolling();
+
           result.status = JeedomDataLoadingStatus.loaded;
-          return resultSubject.next(result);
+          return this.resultSubject.next(result);
         } else {
           console.error('Items not found');
 
           this.loadingItems = false;
-          this.objects = [];
+          this.objects.set([]);
           this.commands = [];
-          //setTimeout(() => this.loadJeedomData(), 5000);
-          result.error = "Items not found";
+          result.error = 'Items not found';
           result.status = JeedomDataLoadingStatus.error;
-          return resultSubject.next(result);
+          return this.resultSubject.next(result);
         }
-        
       },
       error: (err: any) => {
         this.loadingItems = false;
         result.error = err;
         result.status = JeedomDataLoadingStatus.error;
-        return resultSubject.next(result);
-      }
+        return this.resultSubject.next(result);
+      },
     });
 
-    return resultSubject;
+    return this.resultSubject;
   }
 
   registerLongPolling() {
@@ -113,8 +115,8 @@ export class JeedomService {
             this._stopLongPolling = false;
             return;
           }
-          this._longPollingNodeJSTimeout = setTimeout(() => this.registerLongPolling(), this.settings.waitTimeBetweenPolls ?? 1000 );
-        })
+          this._longPollingNodeJSTimeout = setTimeout(() => this.registerLongPolling(), this.settings.waitTimeBetweenPolls ?? 1000);
+        }),
       )
       .subscribe({
         next: (raw: any) => {
@@ -123,7 +125,7 @@ export class JeedomService {
             this._updateCommandValue(this._rpcCommandToCommandValue(update.option));
           });
         },
-        error: error => console.log(error)
+        error: (error) => console.log(error),
       });
   }
 
@@ -135,14 +137,13 @@ export class JeedomService {
   }
 
   getJeedomCommand(commandRef: string): JeedomCmd_http | null {
-    const cmd = this.commands.find(c => c.id === commandRef);
+    const cmd = this.commands.find((c) => c.id === commandRef);
     return cmd || null;
   }
 
   private _updateCommandValue(cmd: CommandValue) {
-
-    const command = this.commands.find(x => x.id === cmd.commandRef);
-    if (command){
+    const command = this.commands.find((x) => x.id === cmd.commandRef);
+    if (command) {
       command.value = cmd.value;
     }
 

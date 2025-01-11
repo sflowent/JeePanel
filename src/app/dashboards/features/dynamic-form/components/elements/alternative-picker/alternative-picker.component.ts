@@ -131,7 +131,6 @@ export class AlternativePickerComponent implements AfterContentInit, ControlValu
     });
 
     alternativeForm.controls['expression'].valueChanges.subscribe(val => {
-      debugger;
       alt.expression = val || '';
       this.updateValue();
     });

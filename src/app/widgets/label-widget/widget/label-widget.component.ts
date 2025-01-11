@@ -47,7 +47,7 @@ export class LabelWidgetComponent extends WidgetBaseComponent implements OnInit 
   }
 
   get hideValue() {
-    return this.settings().hideValue;
+    return this.settings().hideValue || !this.settings().valueCommand;
   }
 
   constructor(private dashboardManage: DashboardManagerService) {

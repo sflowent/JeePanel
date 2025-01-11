@@ -5,6 +5,11 @@ export class JeedomConfig extends ProviderSettings {
   apiKey: string;
   waitTimeBetweenPolls: number = 1000;
 
+  constructor(init?: Partial<ProviderSettings>){
+    super();
+    Object.assign(this, init);
+  }
+
   isValid(){
     return this.url && this.apiKey;
   }

@@ -9,6 +9,7 @@ import { ProvidersService } from '@app/core/providers/services/providers.service
 import { JeeColorPickerComponent } from '@app/shared/components/jee-color-picker/jee-color-picker.component';
 import { JeeSliderNumberComponent } from '@app/shared/components/jee-slider-number/jee-slider-number.component';
 import { FormElementConfig } from '../../../models/dynamic-form.model';
+import { SelectDashboardComponent } from "../../../../../components/select-dashboard/select-dashboard.component";
 
 @Component({
     selector: 'literal-type-picker',
@@ -20,15 +21,16 @@ import { FormElementConfig } from '../../../models/dynamic-form.model';
         }
     ],
     imports: [
-      FormsModule,
-      ReactiveFormsModule,
-      MatCheckboxModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatSelectModule,
-      JeeSliderNumberComponent,
-      JeeColorPickerComponent,
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    JeeSliderNumberComponent,
+    JeeColorPickerComponent,
+    SelectDashboardComponent
+],
     templateUrl: './literal-type-picker.component.html',
     styleUrl: './literal-type-picker.component.scss'
 })

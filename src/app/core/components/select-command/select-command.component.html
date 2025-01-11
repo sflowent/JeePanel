@@ -1,0 +1,18 @@
+<form class="row" [formGroup]="form">
+  @if (settings().label) {
+    <div class="col-label">
+      <label [attr.for]="settings().name + '-command'">{{ settings().label }}</label>
+    </div>
+  }
+  <div class="col-value">
+    <mat-form-field class="full-width-field">
+      <input [placeholder]="settings().placeholder" matInput [id]="settings().name + '-command'" type="text" formControlName="commandLabel" [readonly]="disabled()" />
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="openCommandPicker()" [disabled]="disabled()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      @if (controlCommandLabel.hasError('commandLabel')) {
+        <mat-error>Invalide</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</form>

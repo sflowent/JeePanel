@@ -11,13 +11,7 @@
     </mat-form-field>
   </div>
     <div class="select-command">
-      <mat-form-field>
-        <mat-label>Commande</mat-label>
-        <input matInput type="text" disabled [value]="commandLabel" />
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="openCommandPicker()" [disabled]="!providerSelected">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </mat-form-field>
+      <jee-select-command [settings]="selectCommandSettings" [(ngModel)]="command" (selectionChange)="onCommandChange()" [disabled]="!providerSelected || loading"></jee-select-command>
     </div>
   
 </mat-dialog-content>

@@ -5,6 +5,8 @@ import { CommandFormElementConfig } from '../models/command-form-element';
 import { HistoryValue } from '@dashboards/features/charts/models/history-value.model';
 import { ProviderSettings } from '../models/provider-settings.model';
 import { Command } from '@dashboards/models/command.model';
+import { SelectCommandSettings } from '@app/core/components/select-command/select-command-settings.model';
+import { FormElementConfig } from '@dashboards/features/dynamic-form/models/dynamic-form.model';
 
 export interface ProviderBaseService {
   
@@ -43,7 +45,7 @@ export interface ProviderBaseService {
    * 
    * @param value 
    */
-  getCommandLabelId(value: Command): string | null;
+  getCommandLabelId(value: Command): Observable<string | null>;
 
   /**
    * Get command from labelId
@@ -73,7 +75,14 @@ export interface ProviderBaseService {
     /**
    * Open Command picker Dialog Modal
    */
-  openCommandPickerModal(element: CommandFormElementConfig, command: Command): Observable<Command>;
+  openCommandPickerModal(element: SelectCommandSettings, command: Command): Observable<Command>;
+
+  /**
+   * Presets others fields when editing widget
+   * @param element 
+   * @param command 
+   */
+  presetsWidgetCommands(element: FormElementConfig, command: Command): void;
 
   /**
    * Open configuration Dialog Modal

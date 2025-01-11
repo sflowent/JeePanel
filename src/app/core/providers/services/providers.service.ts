@@ -8,6 +8,7 @@ import { CommandFormElementConfig } from '../models/command-form-element';
 import { ProviderSettings } from '../models/provider-settings.model';
 import { ProviderBaseService } from './provider-base.service';
 import { ProviderSettingsService } from './provider-settings.service';
+import { SelectCommandSettings } from '../../components/select-command/select-command-settings.model';
 
 @Injectable({
   providedIn: 'root',
@@ -76,7 +77,7 @@ export class ProvidersService {
     return of(new Command());
   }
 
-  openCommandPickerModal(element: CommandFormElementConfig, value: Command): Observable<Command> {
+  openCommandPickerModal(element: SelectCommandSettings, value: Command): Observable<Command> {
     const cvSubject = new Subject<Command>();
 
     let providerCode = value?.providerCode;
@@ -113,12 +114,8 @@ export class ProvidersService {
     return result.asObservable();
   }
 
-  broadcastDashboardsEvent(event: DashboardsEvent) {
-    if (this._providers) {
-      Object.keys(this._providers).forEach((providerCode) => {
-        this._providers[providerCode].onDashboardEvent(event);
-      });
-    }
+  hasScenarioProvider(){
+    return true;
   }
 
   deleteIntanceOf(providerCode: string): void {

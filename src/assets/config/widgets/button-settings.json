@@ -23,12 +23,19 @@
           ]
         }
       },
+      
       {
         "name": "action.command",
         "hide": { "name": "actionType", "equals": ["navigate"] },
         "type": "command",
         "label": "Commande action",
         "ui": { "type": "action" }
+      },
+      {
+        "name": "targetDashboardCode",
+        "show": { "name": "actionType", "equals": ["navigate"] },
+        "type": "select-dashboard",
+        "label": "Tableau de bord"
       },
       {
         "name": "actionAlt.command",

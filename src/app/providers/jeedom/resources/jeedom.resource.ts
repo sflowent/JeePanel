@@ -3,7 +3,8 @@ import { Observable, map, tap } from 'rxjs';
 import { JeedomCmd_http, JeedomObject_http } from '../models/http-command';
 import { JeedomConfig } from '../models/jeedom-config';
 import { jeedomGetHistoryResult_rpc, jeedomHistoryValue_rpc } from '../models/rpc-command';
-
+import { GetScenarioTemplate, Scenario } from '../models/scenario';
+import { cronNext } from '@app/shared/functions/cron';
 
 export class JeedomResource {
   pollingUpdateRunning: boolean = false;
@@ -15,10 +16,10 @@ export class JeedomResource {
   loadingItems: any;
   equipments = {};
   objects: any;
-  commands: any[] =[];
+  commands: any[] = [];
 
   private _specificParamNameDict = {
-    numeric: 'slider'
+    numeric: 'slider',
   };
 
   constructor(httpClient: HttpClient) {
@@ -50,35 +51,35 @@ export class JeedomResource {
         objs_json.forEach((obj: JeedomObject_http) => objets.push(new JeedomObject_http(obj)));
 
         return objets;
-      })
+      }),
     );
   }
 
-  setCommandValue(cmdId: string, value:string){
-
+  setCommandValue(cmdId: string, value: string) {
     var uri = this._getJeedomUri() + '&nocache=' + new Date().getTime();
     const formData = new FormData();
     formData.append('type', 'cmd');
     formData.append('id', cmdId);
     formData.append('value', value);
 
-    return this._httpClient.post(uri, formData).pipe(map((result) => {
-      return result;
-    }));
+    return this._httpClient.post(uri, formData).pipe(
+      map((result) => {
+        return result;
+      }),
+    );
   }
 
-  getCommandValue(cmdId: string): Observable<string>{
-    var uri = this._getJeedomUri() + '&type=cmd&id='+ cmdId +'&nocache=' + new Date().getTime();
+  getCommandValue(cmdId: string): Observable<string> {
+    var uri = this._getJeedomUri() + '&type=cmd&id=' + cmdId + '&nocache=' + new Date().getTime();
 
-    return this._httpClient.get(uri, {responseType:"text"}).pipe(
+    return this._httpClient.get(uri, { responseType: 'text' }).pipe(
       map((result: string) => {
         return result;
-      })
+      }),
     );
   }
 
   getHistory(cmdId: string, start: Date, end: Date): Observable<jeedomHistoryValue_rpc[]> {
-
     const startDate = this._toLocalIsoTime(start);
     const endDate = this._toLocalIsoTime(end);
 
@@ -90,24 +91,24 @@ export class JeedomResource {
         apikey: this.settings.apiKey,
         id: cmdId,
         startTime: startDate ?? new Date().toISOString(),
-        endTime: endDate ?? new Date().toISOString()
-      }
+        endTime: endDate ?? new Date().toISOString(),
+      },
     };
 
     return this._httpClient
       .post<jeedomGetHistoryResult_rpc>(uri, data, {
         headers: {
-          'Content-Type': 'text/plain'
+          'Content-Type': 'text/plain',
         },
-        responseType: 'json'
+        responseType: 'json',
       })
       .pipe(
         map((hv_json) => {
           const values: jeedomHistoryValue_rpc[] = [];
-          hv_json.result.forEach((hv:any) => values.push(new jeedomHistoryValue_rpc(hv)));
+          hv_json.result.forEach((hv: any) => values.push(new jeedomHistoryValue_rpc(hv)));
 
           return values;
-        })
+        }),
       );
   }
 
@@ -119,30 +120,114 @@ export class JeedomResource {
       params: {
         apikey: this.settings.apiKey,
         longPolling: 30, // un peu mystic
-        datetime: this.lastTime
-      }
+        datetime: this.lastTime,
+      },
     };
 
     return this._httpClient
       .post(uri, data, {
         headers: {
-          'Content-Type': 'text/plain'
+          'Content-Type': 'text/plain',
         },
-        responseType: 'json'
+        responseType: 'json',
       })
       .pipe(
         tap((raw: any) => {
           this.lastTime = raw.result.datetime;
-        })
+        }),
       );
   }
 
-  _toLocalIsoTime(date: Date): string{
+  getScenario(id: string): Observable<Scenario> {
+    var uri = this.settings.url + '/core/api/jeeApi.php';
+    var data = {
+      jsonrpc: '2.0',
+      method: 'scenario::export',
+      params: {
+        apikey: this.settings.apiKey,
+        id: id,
+      },
+    };
 
+    return this._httpClient
+      .post(uri, data, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        responseType: 'json',
+      })
+      .pipe(
+        map((raw: any) => {
+          return raw.result?.export as Scenario;
+        }),
+      );
+  }
+
+  createScenario() {
+    const scenario = GetScenarioTemplate();
+
+    var uri = this.settings.url + '/core/api/jeeApi.php';
+    var data = {
+      jsonrpc: '2.0',
+      method: 'scenario::import',
+      params: {
+        apikey: this.settings.apiKey,
+        import: scenario,
+      },
+    };
+
+    return this._httpClient
+      .post(uri, data, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        responseType: 'json',
+      })
+      .pipe(
+        tap((raw: any) => {
+          debugger;
+        }),
+      );
+  }
+
+  getScenarios() {
+    var uri = this.settings.url + '/core/api/jeeApi.php';
+    var data = {
+      jsonrpc: '2.0',
+      method: 'scenario::all',
+      params: {
+        apikey: this.settings.apiKey,
+      },
+    };
+
+    return this._httpClient
+      .post(uri, data, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        responseType: 'json',
+      })
+      .pipe(
+        map((raw: any) => {
+          const allscenarios = raw.result as Scenario[];
+
+          const jeePanelScenarios = allscenarios
+            .filter((s) => s.group === 'JeePanel')
+            .map((s) => {
+              s.nextRun = cronNext(s.schedule);
+              return s;
+            });
+
+          return jeePanelScenarios;
+        }),
+      );
+  }
+
+  _toLocalIsoTime(date: Date): string {
     date ??= new Date();
 
     var tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
-    var localISOTime = (new Date(date.getTime() - tzoffset)).toISOString().slice(0, -1);
+    var localISOTime = new Date(date.getTime() - tzoffset).toISOString().slice(0, -1);
 
     return localISOTime;
   }

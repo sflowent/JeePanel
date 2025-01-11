@@ -6,11 +6,10 @@ import { DashboardStorageSettingsService } from '@app/core/dashboards-storage/se
 import { DashboardStorageService } from '@app/core/dashboards-storage/services/dashboard-storage.service';
 import { ProviderDefinition } from '@app/core/providers/models/provider-definition.model';
 import { ProviderSettings } from '@app/core/providers/models/provider-settings.model';
-import { ProviderBaseService } from '@app/core/providers/services/provider-base.service';
 import { ProviderSettingsService } from '@app/core/providers/services/provider-settings.service';
 import { ProvidersService } from '@app/core/providers/services/providers.service';
 import { PageTitleService } from '@app/core/services/page-title-service.service';
-import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/shared/features/modals/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/shared/features/modals/components/confirm-dialog/confirm-dialog.component';
 import { ModalService } from '@app/shared/features/modals/services/modal.service';
 import { clone } from '@app/shared/functions/clone';
 import { v4 as uuidv4 } from 'uuid';

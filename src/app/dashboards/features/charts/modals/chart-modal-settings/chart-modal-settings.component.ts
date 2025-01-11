@@ -25,7 +25,7 @@ export class ChartModalSettingsComponent {
   form: FormGroup = new FormGroup({});
 
   constructor(
-    public dialogRef: MatDialogRef<JeedomCommandPickerModalComponent, any>,
+    public dialogRef: MatDialogRef<ChartModalSettingsComponent, any>,
     @Inject(MAT_DIALOG_DATA)
     private data: { settings: ChartSettings }
   ) {

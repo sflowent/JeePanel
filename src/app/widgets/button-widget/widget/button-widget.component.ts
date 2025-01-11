@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DefaultValues } from '@app/shared/default-values';
-import { WidgetIconComponent } from '@app/shared/features/icons/components/widget-icon/widget-icon.component';
 import { IconSettings } from '@app/shared/features/icons/models/icon-settings.model';
 import { TextFont } from '@app/shared/features/text/models/text-font.model';
-import { TextFontComponent } from '@app/shared/features/text/text-font/text-font.component';
 import { clone } from '@app/shared/functions/clone';
 import { ValueComparaisonService as ValueComparisonService } from '@app/shared/services/value-comparison.service';
 import { LabelIconValueComponent } from '@dashboards/components/label-icon-value/label-icon-value.component';
@@ -16,14 +14,15 @@ import { BackgroundSettings } from '@dashboards/models/widget-settings.model';
 import { DashboardManagerService } from '@dashboards/services/dashboard-manager.service';
 import { takeUntil } from 'rxjs';
 import { ActionButtonSettings, ButtonActionType, ButtonWidgetConfiguration, LinkType } from '../models/button-widget-configuration';
+import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'button-widget',
-    templateUrl: './button-widget.component.html',
-    styleUrls: ['./button-widget.component.scss'],
-    standalone: true,
-    imports: [CommonModule, WidgetBoxComponent, MatButtonModule, LabelIconValueComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'button-widget',
+  templateUrl: './button-widget.component.html',
+  styleUrls: ['./button-widget.component.scss'],
+  standalone: true,
+  imports: [CommonModule, WidgetBoxComponent, MatButtonModule, LabelIconValueComponent, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit {
   override readonly settings = input<ButtonWidgetConfiguration>(new ButtonWidgetConfiguration());
@@ -43,7 +42,7 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
 
   // -- NAVIGATE
   navigate = false;
-  routerLink?: string;
+  routerLink?: string[];
   href?: string;
   value: any;
   action: ActionButtonSettings | null;
@@ -64,14 +63,6 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
   }
 
   ngOnInit(): void {
-
-    const observer = new ResizeObserver(entries => {
-      const width = entries[0].contentRect.width;
-      console.log(width);
-    });
-
-    observer.observe(this.elementRef.nativeElement);
-
     const settings = this.settings();
     ButtonWidgetConfiguration.ensureSettings(settings);
 
@@ -86,7 +77,7 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
     this.label = settings.label;
 
     if (this.navigate) {
-      this.initLink();
+      this.initDashboardLink();
       return;
     }
 
@@ -95,7 +86,6 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
         .onCommandUpdate(settings.valueCommand)
         .pipe(takeUntil(this.destroy))
         .subscribe((cv: CommandValue) => {
-          
           this.updateValue(cv);
 
           this.changeRef.detectChanges();
@@ -138,7 +128,7 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
     }
   }
 
-  buttonActionClick(event: Event){
+  buttonActionClick(event: Event) {
     const settings = this.settings();
     if (settings.action?.command) {
       this.dashboardManager.sendCmd(settings.action?.command);
@@ -146,7 +136,7 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
     event.stopPropagation();
   }
 
-  buttonActionAltClick(event: Event){
+  buttonActionAltClick(event: Event) {
     const settings = this.settings();
     if (settings.actionAlt?.command) {
       this.dashboardManager.sendCmd(settings.actionAlt?.command);
@@ -154,19 +144,15 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
     event.stopPropagation();
   }
 
-  initLink() {
-    const settings = this.settings();
-    if (settings.linkType === LinkType.Dashboard) {
-      this.dashboardManager.getDashboard(settings.targetDashboardCode).subscribe(dashboard => {
-        const settingsValue = this.settings();
-        this.label = settingsValue.dashboardName ? dashboard.settings.title : settingsValue.label;
-
-        this.routerLink = dashboard.link;
-      });
-    } else if (settings.linkType === LinkType.Link) {
-      this.label = settings.label;
-      this.href = settings.href;
+  initDashboardLink() {
+      const settings = this.settings();
+    if (settings.targetDashboardCode) {
+      this.routerLink = ['/', 'dashboards', settings.targetDashboardCode];
     }
+    // } else if (settings.linkType === LinkType.Link) {
+    //   this.label = settings.label;
+    //   this.href = settings.href;
+    // }
   }
 
   _setDisplay() {

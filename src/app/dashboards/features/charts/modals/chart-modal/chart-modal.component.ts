@@ -25,7 +25,7 @@ export class ChartModalComponent {
   ChartType = ChartType;
 
   constructor(
-    public dialogRef: MatDialogRef<JeedomCommandPickerModalComponent, JeedomCmd_http>,
+    public dialogRef: MatDialogRef<ChartModalComponent, JeedomCmd_http>,
     @Inject(MAT_DIALOG_DATA)
     private data: { command: Command; settings: ChartSettings },
   ) {

@@ -8,6 +8,7 @@ export const JEE_SETTINGS = new InjectionToken<JeePanelSettings>('settings');
 export class JeePanelSettings {
   
   storagesSettings: DashboardStorageSettings[] = [];
+  hasScenario: boolean = false;
   get currentStorage(): DashboardStorageSettings {
     return this.storagesSettings.find(st => st.selected)!;
   }

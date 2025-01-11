@@ -17,6 +17,13 @@
     </ul>
   </div>
   <div>
+    <div class="btn-scenario">
+      @if(jeePanelSettings.hasScenario){
+      <button mat-stroked-button (click)="showScenarios()">
+        Automatismes
+      </button>
+      }
+    </div>
     <div>
       @if(editMode()){
       <button mat-button (click)="addDashboard()">

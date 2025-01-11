@@ -1,13 +1,37 @@
-<h2 mat-dialog-title>Commande : {{formElement.label}}</h2>
+<h2 mat-dialog-title>Commande : {{ settings.label }}</h2>
 <mat-dialog-content>
   <div class="jeedom-command-picker">
     <div class="select-objects">
       <mat-form-field>
         <mat-label>Objet</mat-label>
         <mat-select [(ngModel)]="objectSelected">
-          @for (object of objects; track object.id) {
-            <mat-option [value]="object">{{ object.name }}</mat-option>
+
+          <mat-option>
+            <ngx-mat-select-search [formControl]="objectFilterControl"></ngx-mat-select-search>
+          </mat-option>
+
+          @for (object of hierarchicalObjects; track object.id) {
+            <ng-container *ngTemplateOutlet="optionsTree; context: {$implicit: object,  optionItem: object, isChild: false}"></ng-container>
           }
+
+          <ng-template #optionsTree let-optionItem="optionItem" let-isChild="isChild">
+            <mat-option [value]="optionItem">{{optionItem.name}}</mat-option>
+            <div class="sub-objects" *ngFor="let children of optionItem.children">
+             <div  *ngTemplateOutlet="optionsTree; context: {optionItem: children, isChild: true}"></div>
+            </div>
+          </ng-template>
+
+          <ng-template #recursiveObjects let-object>
+            @if (!object.children?.length) {
+              <mat-option [value]="object">{{ object.name }}</mat-option>
+            } @else {
+              <mat-optgroup [value]="object" [label]="object.name">
+                @for (childObject of object.children; track childObject.id) {
+                   <ng-container *ngTemplateOutlet="recursiveObjects; context: {$implicit: childObject}"></ng-container>
+                }
+              </mat-optgroup>
+            }
+          </ng-template>
         </mat-select>
       </mat-form-field>
     </div>
@@ -39,3 +63,15 @@
   <button mat-button [mat-dialog-close]>Annuler</button>
   <button mat-button color="primary" (click)="onCommandSelected()" cdkFocusInitial>Enregistrer</button>
 </mat-dialog-actions>
+
+<ng-template #recursiveObjects let-object>
+  @if (!object.children?.length) {
+    <mat-option [value]="object">{{ object.name }}</mat-option>
+  } @else {
+    <mat-optgroup [value]="object" [label]="object.name">
+      @for (childObject of object.children; track childObject.id) {
+        <mat-option [value]="childObject">{{ childObject.name }}</mat-option>
+      }
+    </mat-optgroup>
+  }
+</ng-template>

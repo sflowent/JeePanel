@@ -1,15 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { CommandFormElementConfig } from '@app/core/providers/models/command-form-element';
+import { FormGroup } from '@angular/forms';
 import { ConfirmDialogComponent } from '@app/shared/features/modals/components/confirm-dialog/confirm-dialog.component';
 import { ModalService } from '@app/shared/features/modals/services/modal.service';
 import { CommandListFormElement } from '@dashboards/features/dynamic-form/components/elements/command-list-picker/models/command-list-form-element.model';
+import { FormElementConfig } from '@dashboards/features/dynamic-form/models/dynamic-form.model';
 import { DynamicForms } from '@dashboards/features/dynamic-form/models/dynamic-forms.model';
 import { DynamicFormService } from '@dashboards/features/dynamic-form/services/dynamic-form.service';
 import { CommandListItem } from '@dashboards/models/command-list-item.model';
 import { JeedomCmd_http } from '../models/http-command';
 import { JeedomService } from './jeedom.service';
-import { FormElementConfig } from '@dashboards/features/dynamic-form/models/dynamic-form.model';
-import { FormControl, FormGroup } from '@angular/forms';
 import { PresetButtonWidget } from './presets/button-widget-presets';
 import { PresetLabelWidget } from './presets/label-widget-presets';
 
@@ -97,7 +96,7 @@ export class JeedomPresetsService {
       // -- set setpoint temperature command
       const jeedomSetPointValueCommand = command.equipment.cmds.find((cmd) => cmd.generic_type === 'THERMOSTAT_SETPOINT');
       const setPointTemperatureValueCommand = this.currentForms!.elementsMap!['setPointTemperatureValueCommand'];
-      if (jeedomSetPointValueCommand && !setPointTemperatureValueCommand?.value) {
+      if (jeedomSetPointValueCommand && !setPointTemperatureValueCommand?.value?.commandRef) {
         setPointTemperatureValueCommand.formControl?.patchValue(jeedomSetPointValueCommand.toCommand(jeedomService.settings.code));
       }
 

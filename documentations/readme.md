@@ -27,8 +27,6 @@ Un dashboard contient des tuiles qui affichent des textes/commandes et une icôn
 
 - Mode d'édition : permet de mettre à jour le dashboard : ajouter/supprimer/modifier des widgets et éditer le dashboard
 
-  
-
 Utilisez l’icône d’engrenage dans le coin supérieur droit pour basculer entre les deux modes.
 
 Pour chaque dashboard, il est possible de perosnnaliser certains paramètres :
@@ -141,3 +139,14 @@ Le widget de sélection affiche l'état actuel d'un élément et il ouvre un men
   
 
 Le widget de sélection affiche un thermostat (Température de consigne, température actuelle, Sélection de modes, ...)
+
+
+# Automatisation
+
+Si un fournisseur le permet (Jeedom) JeePanel permet de créer des automatisations simples : Exécuter une ou plusieurs commandes à une heure précise.
+
+Pour configurer les automatismes, utilisez le lien "Automatismes" dans la SideNav.
+
+## Jeedom 
+
+L'automatisme sera créé dans un scénario Jeedom, avec le groupe "JeePanel". 

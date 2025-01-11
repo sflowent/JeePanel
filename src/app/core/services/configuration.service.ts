@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { APP_CONFIG, JeePanelSettings } from '@app/core/settings/models/jeepanel-settings.model';
 import { Dashboard } from '@dashboards/models/dashboard.model';
-import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Observable, catchError, forkJoin, map, switchMap } from 'rxjs';
 import { DashboardStorageSettings } from '../dashboards-storage/models/dashboard-storage-settings.model';
 import { DashboardStorageSettingsService } from '../dashboards-storage/services/dashboard-storage-settings.service';
 import { DashboardStorageService } from '../dashboards-storage/services/dashboard-storage.service';
@@ -38,8 +38,12 @@ export class ConfigurationService {
 
         return this.dashboardStorageService.getDashboards();
       }),
+      catchError((_) => {
+        return [];
+      }),
       map((dashboards: Dashboard[]) => {
         APP_CONFIG.dashboards = dashboards;
+        APP_CONFIG.hasScenario =  this.providersService.hasScenarioProvider();
 
         return APP_CONFIG;
       }),

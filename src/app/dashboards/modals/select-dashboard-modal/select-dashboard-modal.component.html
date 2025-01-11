@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>
+    Selectionner un Tableau de bord
+  </h2>
+  
+  <div mat-dialog-content>
+   <jee-select-dashboard [(ngModel)]="dashboardCode" [exceptDashboards]="exceptDashboards"></jee-select-dashboard>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Annuler</button>
+    <button mat-button (click)="onSave()">Enregistrer</button>
+  </div>
+  

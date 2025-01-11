@@ -194,7 +194,7 @@ export class DashboardsPageComponent implements OnInit, AfterViewInit, OnDestroy
     this.refreshSettings(this.dashboard.settings);
 
     setTimeout(() => {
-      this.providersService.broadcastDashboardsEvent(this.isEditing ? DashboardsEvent.Edit : DashboardsEvent.View);
+      this.dashboardManager.broadcastDashboardsEvent(this.isEditing ? DashboardsEvent.Edit : DashboardsEvent.View);
     });
   }
 

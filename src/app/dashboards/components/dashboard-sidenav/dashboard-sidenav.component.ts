@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PageTitleService } from '@app/core/services/page-title-service.service';
 import { SideNavService } from '@app/core/services/sidenav.service';
 import { JEE_SETTINGS } from '@app/core/settings/models/jeepanel-settings.model';
+import { AutomationsModalComponent } from '@app/automations/modals/automations-modal/automations-modal.component';
 import { PromptDialogComponent } from '@app/shared/features/modals/components/prompt-dialog/prompt-dialog.component';
 import { ModalService } from '@app/shared/features/modals/services/modal.service';
 import { Dashboard } from '../../models/dashboard.model';
@@ -23,7 +24,7 @@ export class DashboardSidenavComponent implements OnInit {
   dashboardManager = inject(DashboardManagerService)
   pageTitleService = inject(PageTitleService)
   sidenavService = inject(SideNavService)
-  jeePanelSettings = inject(JEE_SETTINGS)
+  jeePanelSettings = inject(JEE_SETTINGS);
 
   now: number = Date.now();
   editMode = computed(() => this.pageTitleService.editMode());
@@ -52,6 +53,13 @@ export class DashboardSidenavComponent implements OnInit {
         }
       }))
       }
+    })
+  }
+
+  showScenarios(){
+    this.modalService.open(AutomationsModalComponent, {
+    }).afterClosed().subscribe((dashboardName: string) => {
+
     })
   }
 
