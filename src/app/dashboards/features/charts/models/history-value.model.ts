@@ -1,3 +1,4 @@
+import { SeriesItem } from "./series-item.model";
 
 export class HistoryValue{
     value: any;
@@ -5,6 +6,8 @@ export class HistoryValue{
     date: Date;
     color?: string;
     name: string;
+
+    serie!: SeriesItem
 
     numberValue() : number{
         let returnValue = parseFloat(this.displayValue);

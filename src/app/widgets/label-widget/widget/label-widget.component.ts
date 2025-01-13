@@ -124,7 +124,7 @@ export class LabelWidgetComponent extends WidgetBaseComponent implements OnInit 
 
     settings.history.alternatives = this.alternativesSettings;
     settings.history.title = settings.label;
-    settings.history.series = [new SeriesItem({ name: settings.label, command: settings.valueCommand })];
+    settings.history.series = [new SeriesItem({ name: settings.label, command: settings.valueCommand, showFilter: true })];
     this.chartService.openModalChart(settings.history);
   }
 }

@@ -1,5 +1,5 @@
 @if (hasAlternatives()) {
-  <mat-checkbox [(ngModel)]="showOriginalValues">Afficher les valeurs originales</mat-checkbox>
+  <mat-checkbox [(ngModel)]="showOriginalValues" (ngModelChange)="showOriginalValuesChanged()">Afficher les valeurs originales</mat-checkbox>
 }
 
 @if(!settings().hideFilters){
@@ -14,16 +14,20 @@
       </mat-select>
     </mat-form-field>
   }
-  <mat-form-field>
-    <mat-label>Filtre valeurs</mat-label>
-    <mat-select [(ngModel)]="filtersSelected" multiple>
-      @for (availableValue of availableValuesFilter(); track $index) {
-        <mat-option [value]="availableValue">{{ showOriginalValues() ? availableValue.value : availableValue.displayValue }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+
+  @if (availableValuesFilter().length) {
+    <mat-form-field>
+      <mat-label>Filtre valeurs</mat-label>
+      <mat-select [(ngModel)]="filtersSelected" multiple>
+        @for (availableValue of valuesFilter(); track $index) {
+          <mat-option [value]="availableValue">{{availableValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
 </div>
 }
+
 @for (value of values(); track $index) {
   <div [style.color]="value.color">
     @if (multiple()) {

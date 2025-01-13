@@ -4,7 +4,7 @@
     <div class="select-objects">
       <mat-form-field>
         <mat-label>Objet</mat-label>
-        <mat-select [(ngModel)]="objectSelected">
+        <mat-select [(ngModel)]="objectSelected"  (selectionChange)="onObjectSelected()">
 
           <mat-option>
             <ngx-mat-select-search [formControl]="objectFilterControl"></ngx-mat-select-search>
@@ -40,7 +40,10 @@
       <mat-form-field>
         <mat-label>Équipement</mat-label>
         <mat-select [(ngModel)]="equipmentSelected" (selectionChange)="onEquipmentSelected()">
-          @for (equip of objectSelected?.eqLogics; track equip.id) {
+          <mat-option>
+            <ngx-mat-select-search [formControl]="equipmentFilterControl"></ngx-mat-select-search>
+          </mat-option>
+          @for (equip of equipments; track equip.id) {
             <mat-option [value]="equip">{{ equip.name }}</mat-option>
           }
         </mat-select>
@@ -51,6 +54,9 @@
       <mat-form-field>
         <mat-label>Commandes</mat-label>
         <mat-select [(ngModel)]="commandSelected">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="commandFilterControl"></ngx-mat-select-search>
+          </mat-option>
           @for (cmd of commands; track cmd.id) {
             <mat-option [value]="cmd">{{ cmd.name }}</mat-option>
           }
@@ -61,7 +67,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]>Annuler</button>
-  <button mat-button color="primary" (click)="onCommandSelected()" cdkFocusInitial>Enregistrer</button>
+  <button mat-button color="primary" (click)="onSave()" cdkFocusInitial>Enregistrer</button>
 </mat-dialog-actions>
 
 <ng-template #recursiveObjects let-object>

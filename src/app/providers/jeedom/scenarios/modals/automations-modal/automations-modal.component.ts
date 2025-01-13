@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { JeedomScenariosComponent } from '@app/automations/components/jeedom-scenarios/jeedom-scenarios.component';
+import { JeedomScenariosComponent } from '../../components/jeedom-scenarios/jeedom-scenarios.component';
 
 @Component({
     selector: 'jee-automations-modal',

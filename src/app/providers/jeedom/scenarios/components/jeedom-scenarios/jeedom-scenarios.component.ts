@@ -6,14 +6,26 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
+import { SelectCommandComponent } from '@app/core/components/select-command/select-command.component';
 import { ProvidersService } from '@app/core/providers/services/providers.service';
-import { Scenario } from '@app/providers/jeedom/models/scenario';
+import { GetScenarioTemplate, Scenario } from '@app/providers/jeedom/models/scenario';
 import { JeedomProviderService } from '@app/providers/jeedom/services/jeedom-provider.service';
+import { SelectCommandSettings } from '@app/core/components/select-command/select-command-settings.model';
+
 
 @Component({
   selector: 'jee-jeedom-scenarios',
   standalone: true,
-  imports: [MatExpansionModule, MatFormFieldModule, MatInput, MatIconModule, MatButtonModule, DatePipe, ReactiveFormsModule],
+  imports: [
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInput,
+    MatIconModule,
+    MatButtonModule,
+    DatePipe,
+    ReactiveFormsModule,
+    SelectCommandComponent,
+  ],
   templateUrl: './jeedom-scenarios.component.html',
   styleUrl: './jeedom-scenarios.component.scss',
 })
@@ -28,7 +40,9 @@ export class JeedomScenariosComponent implements OnInit {
     return (this.providersService.getProvider(this.providerCode()) as JeedomProviderService).jeedomResource;
   });
 
-  scenariosForms: { loading: boolean; form?: FormGroup; scenario:Scenario }[] = [];
+  scenariosForms: { loading: boolean; form?: FormGroup; scenario: Scenario }[] = [];
+
+  selectCommandSettings:SelectCommandSettings = {};
 
   ngOnInit(): void {
     this.jeedomResource()
@@ -40,9 +54,9 @@ export class JeedomScenariosComponent implements OnInit {
           this.scenariosForms.push({
             loading: true,
             scenario: scenario,
-            form: undefined
+            form: undefined,
           });
-        })
+        });
       });
   }
 
@@ -59,34 +73,36 @@ export class JeedomScenariosComponent implements OnInit {
   }
 
   addScenario() {
-
-    const scenario = {
-      id: "0",
-      group: "JeePanel",
-      elements: [],
-      isActive: "true",
-      isVisible: "false",
-      mode: "schedule",
-      name: "",
-      schedule: ""
-    };
+    const scenario = GetScenarioTemplate();
 
     const scenariosForm = {
       loading: true,
       scenario: scenario,
-      form: undefined
+      form: undefined,
     };
 
     this.scenariosForms.push(scenariosForm);
     this.scenarioFormElements(scenariosForm, scenario);
   }
 
-  deleteCommand(expressionForm: FormArray, index: number){
-    expressionForm.removeAt(index);
+  addExpression(expressionsForm: FormArray){
+    const formCommands = this.formBuilder.group({
+      command: ["", Validators.required],
+      value: [''],
+    });
 
+    expressionsForm.push(formCommands);
   }
 
-  public scenarioFormElements(scenarioF:any, scenarioDetailed: Scenario) {
+  deleteCommand(expressionForm: FormArray, index: number) {
+    expressionForm.removeAt(index);
+  }
+
+  saveScenario(scenariosForm: any){
+    this.jeedomResource().updateScenario(scenariosForm.scenario).subscribe();
+  }
+
+  public scenarioFormElements(scenarioF: any, scenarioDetailed: Scenario) {
     const expressions = scenarioDetailed.elements.flatMap((e) => e.subElements).flatMap((e) => e.expressions);
 
     const expressionsForm = this.formBuilder.array([]) as FormArray;
@@ -94,7 +110,7 @@ export class JeedomScenariosComponent implements OnInit {
     scenarioF.form = this.formBuilder.group({
       name: [scenarioDetailed.name, Validators.required],
       schedule: [scenarioDetailed.schedule, Validators.required],
-      expressions: expressionsForm
+      expressions: expressionsForm,
     });
 
     expressions.forEach((element) => {

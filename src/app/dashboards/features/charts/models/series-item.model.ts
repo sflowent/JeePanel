@@ -4,6 +4,7 @@ export class SeriesItem {
   command: Command | null = null;
 
   color?: string;
+  showFilter = false;
   name: string = '';
 
   constructor(init?: Partial<SeriesItem>) {

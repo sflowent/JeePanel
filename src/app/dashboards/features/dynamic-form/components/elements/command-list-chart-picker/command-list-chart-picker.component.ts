@@ -21,6 +21,7 @@ import { SeriesItem } from '@dashboards/features/charts/models/series-item.model
 import { debounceTime } from 'rxjs';
 import { FormElementConfig } from '../../../models/dynamic-form.model';
 import { CommandPickerComponent } from '../command-picker/command-picker.component';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
     selector: 'jee-command-list-chart-picker',
@@ -33,7 +34,8 @@ import { CommandPickerComponent } from '../command-picker/command-picker.compone
         MatIconModule,
         CommandPickerComponent,
         JeeColorPickerComponent,
-        MatExpansionModule
+        MatExpansionModule,
+        MatCheckbox
     ],
     providers: [
         {
@@ -95,7 +97,7 @@ export class CommandListChartPickerComponent implements OnInit, AfterContentInit
   constructor() {}
 
   ngOnInit(): void {
-    this.form().addControl('commandListChart', this.formArrayCommands);
+    this.form()?.addControl('commandListChart', this.formArrayCommands);
   }
 
   ngAfterContentInit(): void {
@@ -127,7 +129,8 @@ export class CommandListChartPickerComponent implements OnInit, AfterContentInit
     const commandForm = this.formBuilder.group({
       command: [command.command],
       name: [command.name],
-      color: [command.color]
+      color: [command.color],
+      showFilter: [command.showFilter]
     });
 
     commandForm.controls['command'].valueChanges.pipe(debounceTime(200)).subscribe((val: any) => {
@@ -141,7 +144,12 @@ export class CommandListChartPickerComponent implements OnInit, AfterContentInit
     });
 
     commandForm.controls['color'].valueChanges.pipe(debounceTime(200)).subscribe(val => {
-      command.color = val;
+      command.color = val ?? "";
+      this.updateValue();
+    });
+
+    commandForm.controls['showFilter'].valueChanges.pipe(debounceTime(200)).subscribe(val => {
+      command.showFilter = val ?? false;
       this.updateValue();
     });
 

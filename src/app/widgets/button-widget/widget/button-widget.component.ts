@@ -45,7 +45,7 @@ export class ButtonWidgetComponent extends WidgetBaseComponent implements OnInit
   routerLink?: string[];
   href?: string;
   value: any;
-  action: ActionButtonSettings | null;
+  action: ActionButtonSettings | null = null;
   showButtons: boolean = false;
 
   get hideValue() {

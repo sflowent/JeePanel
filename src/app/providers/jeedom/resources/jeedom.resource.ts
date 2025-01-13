@@ -163,8 +163,8 @@ export class JeedomResource {
       );
   }
 
-  createScenario() {
-    const scenario = GetScenarioTemplate();
+  updateScenario(scenario: Scenario) {
+    const scenarioTpl = GetScenarioTemplate();
 
     var uri = this.settings.url + '/core/api/jeeApi.php';
     var data = {
@@ -172,7 +172,8 @@ export class JeedomResource {
       method: 'scenario::import',
       params: {
         apikey: this.settings.apiKey,
-        import: scenario,
+        id: scenario.id,
+        import: scenarioTpl,
       },
     };
 

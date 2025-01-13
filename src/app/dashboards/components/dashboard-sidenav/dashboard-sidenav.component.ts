@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
 import { PageTitleService } from '@app/core/services/page-title-service.service';
 import { SideNavService } from '@app/core/services/sidenav.service';
 import { JEE_SETTINGS } from '@app/core/settings/models/jeepanel-settings.model';
-import { AutomationsModalComponent } from '@app/automations/modals/automations-modal/automations-modal.component';
 import { PromptDialogComponent } from '@app/shared/features/modals/components/prompt-dialog/prompt-dialog.component';
 import { ModalService } from '@app/shared/features/modals/services/modal.service';
 import { Dashboard } from '../../models/dashboard.model';
 import { DashboardManagerService } from '../../services/dashboard-manager.service';
+import { AutomationsModalComponent } from '@app/providers/jeedom/scenarios/modals/automations-modal/automations-modal.component';
 
 @Component({
     selector: 'dashboard-sidenav',
@@ -79,7 +79,7 @@ export class DashboardSidenavComponent implements OnInit {
   }
 }
 
-function encodeID(s) {
+function encodeID(s: string) {
   if (s==='') return '_';
   return s.replace(/[^a-zA-Z0-9.-]/g, "");
 }

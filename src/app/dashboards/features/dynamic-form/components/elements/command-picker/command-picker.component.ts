@@ -27,7 +27,7 @@ export class CommandPickerComponent implements ControlValueAccessor {
 
   readonly element = input.required<FormElementConfig>();
 
-  value: Command | null;
+  value: Command | null = null;
 
   onChange: any = () => {};
   onTouch: any = () => {};
@@ -36,7 +36,6 @@ export class CommandPickerComponent implements ControlValueAccessor {
   form: FormGroup<{}> = new FormGroup({});
 
   selectCommandSettings!: SelectCommandSettings;
-  controlCommand: FormControl<Command | null>;
 
   constructor() {}
 
@@ -72,10 +71,6 @@ export class CommandPickerComponent implements ControlValueAccessor {
   }
 
   _initialize(): void {
-    // if (this.controlCommand){
-    //   this.controlCommand.patchValue(this.value);
-    //   return;
-    // }
 
     this.selectCommandSettings = {
       name: this.element()?.name,
@@ -84,17 +79,6 @@ export class CommandPickerComponent implements ControlValueAccessor {
       isHistorized: this.element()?.ui?.isHistorized ?? false,
       subType: this.element()?.ui?.subType,
     };
-
-    // this.controlCommand = new FormControl<Command | null>(this.value);
-    // //this.element().formControl = controlCommand;
-    // this.form.addControl('commandLabel',  this.controlCommand);
-
-    // this.controlCommand.valueChanges.subscribe((value: Command | null) => {
-    //   this.value = value;
-    //   if (value) {
-    //     this.providersService.getProvider(this.value?.providerCode!)?.presetsWidgetCommands(this.element(), value);
-    //   }
-    //   this.updateValue();
-    // });
+    
   }
 }

@@ -63,13 +63,13 @@ export class ChartTypes {
 }
 
 export class ChartSettings {
-  hideFilters: boolean = false;
   title: string;
   titleFont: TextFont = DefaultValues.LabelFont();
 
   type: ChartType;
   autoRefresh?: boolean = false;
   alternatives: AlternativeSettings;
+  hideFilters: boolean = false;
 
   period: string = ChartPeriods.W.code;
   series: SeriesItem[] | null = null;

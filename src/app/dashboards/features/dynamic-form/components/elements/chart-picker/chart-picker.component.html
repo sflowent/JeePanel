@@ -1,4 +1,4 @@
-<div [formGroup]="form()">
+<div [formGroup]="form">
   <div class="row">
     <div class="col-label">
       <label>Graphique</label>
@@ -41,7 +41,7 @@
       <label>Valeurs alternatives</label>
     </div>
     <div class="col-value">
-      <jee-alternative-picker [form]="form()" [formControlName]="formNames['alternatives']"></jee-alternative-picker>
+      <jee-alternative-picker [form]="form" [formControlName]="formNames['alternatives']"></jee-alternative-picker>
     </div>
   </div>
   }

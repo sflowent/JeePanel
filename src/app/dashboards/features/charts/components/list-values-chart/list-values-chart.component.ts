@@ -17,7 +17,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
   templateUrl: './list-values-chart.component.html',
   styleUrl: './list-values-chart.component.scss',
 })
-export class ListValueChartComponent{
+export class ListValueChartComponent {
   providerService = inject(ProvidersService);
   valueComparisonService = inject(ValueComparaisonService);
   charService = inject(ChartService);
@@ -25,8 +25,14 @@ export class ListValueChartComponent{
   settings = input.required<ChartSettings>();
 
   showOriginalValues = model<boolean>(false);
+  hasFilters = signal<boolean>(false);
+
   hasAlternatives = computed(() => {
     return this.settings()?.alternatives?.alternatives?.length > 0;
+  });
+
+  propValue = computed(() => {
+    return this.showOriginalValues() ? 'value' : 'displayValue';
   });
 
   allValues = signal<HistoryValue[]>([]);
@@ -34,12 +40,12 @@ export class ListValueChartComponent{
   values = computed(() => {
     let values = this.allValues();
 
-    if (this.filtersSelected().length){
-      values = values.filter((v) => this.filtersSelected()?.some((f) => f.displayValue === v.displayValue));
+    if (this.seriesSelected().length) {
+      values = values.filter((v) => this.seriesSelected()?.some((f) => f === v.name));
     }
 
-    if (this.seriesSelected().length){
-      values = values.filter((v) => this.seriesSelected()?.some((f) => f.name === v.name));
+    if (this.filtersSelected().length) {
+      values = values.filter((v) => this.filtersSelected()?.some((f) => f === v[this.propValue()]));
     }
 
     return values;
@@ -51,28 +57,35 @@ export class ListValueChartComponent{
 
   filtersSelected = model<any[]>([]);
   seriesSelected = model<any[]>([]);
-  availableValuesFilter = computed(() => {
-    const uniqueValues = Array.from(
-      new Map(
-        this.allValues().map((item) => [
-          `${item.value}|#|${item.displayValue}`,
-          {
-            value: item.value,
-            displayValue: item.displayValue,
-          },
-        ]),
-      ).values(),
-    );
+  availableValuesFilter = signal<HistoryValue[]>([]);
 
-    return uniqueValues;
+  valuesFilter = computed(() => {
+    let values = this.availableValuesFilter()?.map((v) => v[this.propValue()]).sort((a, b) => b - a);
+    values = [...new Set(values)];
+
+    return values;
   });
 
   constructor() {
     effect(() => {
-      this.charService.getChartList(this.settings()).subscribe((values: HistoryValue[][]) => {
+      this.hasFilters.set(false);
+
+      this.charService.getChartList(this.settings()).subscribe((result) => {
+        // -- values
+        const values = Object.values(result);
         const flatValues = values.flatMap((hvs) => hvs).sort((a, b) => b.date.getTime() - a.date.getTime());
         this.allValues.set(flatValues);
+
+        // -- filters
+        const filtersSerie = this.settings().series?.filter((s) => s.showFilter);
+
+        let availableValuesFilter = filtersSerie?.flatMap((fs) => result[fs.name]);
+        this.availableValuesFilter.set(availableValuesFilter ?? []);
       });
     });
+  }
+
+  showOriginalValuesChanged(){
+    this.filtersSelected.set([]);
   }
 }

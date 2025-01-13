@@ -32,8 +32,8 @@ export class DynamicForm implements IVisible {
 }
 
 export class FormElementConfig<T = any> implements IVisible {
-  name: string;
-  type: string;
+  name?: string;
+  type?: string;
   label?: string;
 
   protected _value?: T | null = null;

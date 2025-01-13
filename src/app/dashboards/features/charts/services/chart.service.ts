@@ -37,7 +37,10 @@ export class ChartService {
       .subscribe();
   }
 
-  getChartList(settings: ChartSettings): Observable<HistoryValue[][]> {
+  getChartList(settings: ChartSettings): Observable<{[key: string]: HistoryValue[] }> {
+
+    const result: {[key: string]: HistoryValue[] } = {};
+
     const resultSub = new Subject<any>();
     const start = ChartPeriod.toDate(settings.period);
     const allSub: Observable<HistoryValue[]>[] = [];
@@ -47,7 +50,11 @@ export class ChartService {
       if (si.command) {
         const getH = this.providerService.getHistory(si.command, start).pipe(
           tap((hvs) => {
-            resultValues.push(hvs);
+            //resultValues.push(hvs);
+
+            //hvs.forEach((hv) => hv.serie = si);
+
+            result[si.name] = hvs;
 
             this._evalValues(hvs, si, settings.alternatives?.alternatives);
           }),
@@ -57,7 +64,7 @@ export class ChartService {
     });
 
     forkJoin(allSub).subscribe(() => {
-      resultSub.next(resultValues);
+      resultSub.next(result);
     });
 
     return resultSub.asObservable();

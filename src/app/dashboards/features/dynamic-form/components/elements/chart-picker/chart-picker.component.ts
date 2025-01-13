@@ -45,7 +45,7 @@ export class ChartPickerComponent implements OnInit, AfterContentInit, ControlVa
 
   readonly noAlternatives = input<boolean>(true);
 
-  readonly form = input<FormGroup<{}>>();
+  readonly form = new FormGroup({});
 
   value: ChartSettings = new ChartSettings();
 
@@ -59,7 +59,7 @@ export class ChartPickerComponent implements OnInit, AfterContentInit, ControlVa
   formNames: any = {};
   controlCommandLabel = new FormControl<string>('');
   formArrayCommands: FormArray = this.formBuilder.array([]);
-  typeFromControl: FormControl<any>;
+  typeFromControl!: FormControl<any>;
 
   writeValue(value: ChartSettings): void {
     this.value = value ?? new ChartSettings();
@@ -97,7 +97,7 @@ export class ChartPickerComponent implements OnInit, AfterContentInit, ControlVa
     const control = new FormControl(value);
     this.formNames[name] = this.element().name + '.' + name;
 
-    this.form().addControl(this.formNames[name], control);
+    this.form.addControl(this.formNames[name], control);
 
     control.valueChanges.subscribe(value => {
       this.value[name] = value;

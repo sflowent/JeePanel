@@ -75,8 +75,11 @@ export class GenericChartComponent {
         },
       };
 
-      this.chartService.getChartList(this.settings()).subscribe((values: HistoryValue[][]) => {
+      this.chartService.getChartList(this.settings()).subscribe((result) => {
+
         const series: any[] = [];
+        const values = Object.values(result);
+
         values.forEach((hvs) => {
           if (hvs.length) {
             const first = hvs[0];
